@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MASKLESS LITHO Manual</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&amp;family=Hanken+Grotesk:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "accent-blue": "#3A6AFD",
+                        "inverse-on-surface": "#27313c",
+                        "surface-dim": "#09141e",
+                        "outline-variant": "#434655",
+                        "surface-main": "#00060F",
+                        "inverse-surface": "#d9e3f2",
+                        "on-secondary": "#2c303c",
+                        "tertiary-container": "#c95100",
+                        "surface-container-low": "#121d27",
+                        "surface-container-highest": "#2b3641",
+                        "secondary-container": "#454956",
+                        "error": "#ffb4ab",
+                        "surface-elevated": "#242834",
+                        "text-muted": "#A0AEC0",
+                        "on-background": "#d9e3f2",
+                        "on-primary": "#002780",
+                        "on-tertiary-container": "#ffffff",
+                        "surface-tint": "#b6c4ff",
+                        "text-primary": "#FFFFFF",
+                        "on-error": "#690005",
+                        "on-surface-variant": "#c3c5d8",
+                        "surface-container-lowest": "#050f19",
+                        "on-tertiary-fixed": "#351000",
+                        "on-surface": "#d9e3f2",
+                        "primary-container": "#3a6afd",
+                        "surface-bright": "#303a45",
+                        "surface-container-high": "#212b36",
+                        "on-primary-fixed": "#001550",
+                        "tertiary-fixed-dim": "#ffb694",
+                        "on-secondary-container": "#b5b8c7",
+                        "secondary": "#c3c6d6",
+                        "surface-container": "#16212b",
+                        "primary-fixed-dim": "#b6c4ff",
+                        "tertiary": "#ffb694",
+                        "secondary-fixed": "#dfe2f2",
+                        "error-container": "#93000a",
+                        "surface-variant": "#2b3641",
+                        "outline": "#8d90a1",
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#c3c6d6",
+                        "inverse-primary": "#104fe4",
+                        "surface": "#09141e",
+                        "on-primary-fixed-variant": "#003ab3",
+                        "on-tertiary-fixed-variant": "#7b2f00",
+                        "on-secondary-fixed-variant": "#434653",
+                        "on-secondary-fixed": "#171b27",
+                        "tertiary-fixed": "#ffdbcc",
+                        "on-tertiary": "#571f00",
+                        "on-primary-container": "#ffffff",
+                        "primary-fixed": "#dce1ff",
+                        "primary": "#b6c4ff",
+                        "background": "#09141e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "container-max": "1280px",
+                        "gutter": "24px",
+                        "base": "8px",
+                        "margin-desktop": "48px",
+                        "sidebar-width": "280px"
+                    },
+                    "fontFamily": {
+                        "label-caps": ["JetBrains Mono"],
+                        "display-lg": ["Montserrat"],
+                        "headline-lg": ["Montserrat"],
+                        "headline-lg-mobile": ["Montserrat"],
+                        "headline-sm": ["Montserrat"],
+                        "headline-md": ["Montserrat"],
+                        "body-md": ["Hanken Grotesk"],
+                        "body-sm": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "label-caps": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "500" }],
+                        "display-lg": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "headline-sm": ["20px", { "lineHeight": "1.5", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { background-color: #00060F; color: #FFFFFF; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .glass-panel {
+            background: rgba(36, 40, 52, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(58, 106, 253, 0.2);
+        }
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #00060F; }
+        ::-webkit-scrollbar-thumb { background: #242834; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3A6AFD; }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col font-body-md text-body-md selection:bg-accent-blue selection:text-white">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-inverse-surface text-primary dark:text-inverse-primary font-headline-sm text-headline-sm docked full-width top-0 sticky border-b border-outline-variant dark:border-outline flat no shadows flex justify-between items-center px-margin-page h-16 w-full z-50">
+<div class="flex items-center gap-4 px-4 md:px-margin-desktop">
+<button class="md:hidden text-on-surface-variant hover:text-primary transition-colors" onclick="document.getElementById('mobile-nav').classList.toggle('hidden')">
+<span class="material-symbols-outlined text-2xl">menu</span>
+</button>
+<div class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary tracking-tight">MASKLESS LITHO Manual</div>
+</div>
+<div class="flex items-center gap-4 px-4 md:px-margin-desktop">
+<a class="bg-accent-blue hover:bg-blue-600 text-white font-label-caps text-label-caps py-2 px-4 rounded transition-colors hidden sm:flex items-center gap-2" href="#quick-start">
+<span class="material-symbols-outlined text-sm">bolt</span> Quick Start
+            </a>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-2xl">search</span>
+</button>
+</div>
+</header>
+<div class="flex flex-1 max-w-[1600px] mx-auto w-full">
+<!-- NavigationDrawer (Desktop) -->
+<aside class="hidden md:flex bg-surface dark:bg-inverse-surface text-primary dark:text-inverse-primary font-body-md text-body-md h-[calc(100vh-64px)] w-sidebar-width sticky top-16 border-r border-outline-variant dark:border-outline flat no shadows flex-col py-8 gap-base overflow-y-auto">
+<div class="px-6 mb-4">
+<h2 class="font-headline-sm text-headline-sm font-bold text-primary mb-2">Documentation</h2>
+</div>
+<nav class="flex flex-col gap-1 px-4">
+<a class="nav-link border-l-4 border-primary bg-primary-container/10 text-primary font-bold px-4 py-2 rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#home">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span> 1. Home
+                </a>
+<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#quick-start">
+<span class="material-symbols-outlined">bolt</span> 2. Quick Start
+                </a>
+<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#safety">
+<span class="material-symbols-outlined">health_and_safety</span> 3. Safety
+                </a>
+<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#install-run">
+<span class="material-symbols-outlined">install_desktop</span> 4. Install/Run
+                </a>
+<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#main-window">
+<span class="material-symbols-outlined">desktop_windows</span> 5. Main Window
+                </a>
+<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#motorized-focus">
+<span class="material-symbols-outlined">center_focus_strong</span> 6. Motorized Focus
+                </a>
+<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#pattern-settings">
+<span class="material-symbols-outlined">pattern</span> 7. Pattern Settings
+                </a>
+<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#align-viewer">
+<span class="material-symbols-outlined">visibility</span> 8. Align Viewer
+                </a>
+<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#align-wizard">
+<span class="material-symbols-outlined">auto_awesome</span> 9. Align Wizard
+                </a>
+<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#uv-keystone">
+<span class="material-symbols-outlined">grid_on</span> 10. UV Keystone
+                </a>
+<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#draw-cad">
+<span class="material-symbols-outlined">design_services</span> 11. Draw CAD
+                </a>
+<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#cad-output">
+<span class="material-symbols-outlined">output</span> 12. CAD Output
+                </a>
+<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#gds-import">
+<span class="material-symbols-outlined">file_upload</span> 13. GDS Import
+                </a>
+<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#expose-setup">
+<span class="material-symbols-outlined">exposure</span> 14. Expose Setup
+                </a>
+<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#calibration-lut">
+<span class="material-symbols-outlined">tune</span> 15. Calibration LUT
+                </a>
+<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#compensation">
+<span class="material-symbols-outlined">transform</span> 16. Compensation
+                </a>
+<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#settings">
+<span class="material-symbols-outlined">settings</span> 17. Setting
+                </a>
+<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#legacy-dlp">
+<span class="material-symbols-outlined">history</span> 18. Legacy DLP
+                </a>
+<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#test-mode">
+<span class="material-symbols-outlined">science</span> 19. TEST Mode
+                </a>
+<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#data-paths">
+<span class="material-symbols-outlined">folder</span> 20. Data Paths
+                </a>
+<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#troubleshooting">
+<span class="material-symbols-outlined">build</span> 21. Troubleshooting
+                </a>
+<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#release-notes">
+<span class="material-symbols-outlined">new_releases</span> 22. Release Notes
+                </a>
+</nav>
+</aside>
+<!-- Mobile Nav Drawer (Hidden by default) -->
+<div class="hidden fixed inset-0 z-40 bg-black/80 backdrop-blur-sm md:hidden" id="mobile-nav">
+<div class="bg-surface-elevated w-64 h-full shadow-2xl flex flex-col p-4 overflow-y-auto">
+<button class="self-end text-text-muted mb-4" onclick="document.getElementById('mobile-nav').classList.add('hidden')">
+<span class="material-symbols-outlined">close</span>
+</button>
+<nav class="flex flex-col gap-2">
+<a class="text-on-surface py-2" href="#home" onclick="document.getElementById('mobile-nav').classList.add('hidden')">1. Home</a>
+<a class="text-on-surface py-2" href="#quick-start" onclick="document.getElementById('mobile-nav').classList.add('hidden')">2. Quick Start</a>
+<a class="text-on-surface py-2" href="#safety" onclick="document.getElementById('mobile-nav').classList.add('hidden')">3. Safety</a>
+<a class="text-on-surface py-2" href="#install-run" onclick="document.getElementById('mobile-nav').classList.add('hidden')">4. Install/Run</a>
+<a class="text-on-surface py-2" href="#main-window" onclick="document.getElementById('mobile-nav').classList.add('hidden')">5. Main Window</a>
+<a class="text-on-surface py-2" href="#motorized-focus" onclick="document.getElementById('mobile-nav').classList.add('hidden')">6. Motorized Focus</a>
+<a class="text-on-surface py-2" href="#pattern-settings" onclick="document.getElementById('mobile-nav').classList.add('hidden')">7. Pattern Settings</a>
+<a class="text-on-surface py-2" href="#align-viewer" onclick="document.getElementById('mobile-nav').classList.add('hidden')">8. Align Viewer</a>
+<a class="text-on-surface py-2" href="#align-wizard" onclick="document.getElementById('mobile-nav').classList.add('hidden')">9. Align Wizard</a>
+<a class="text-on-surface py-2" href="#uv-keystone" onclick="document.getElementById('mobile-nav').classList.add('hidden')">10. UV Keystone</a>
+<a class="text-on-surface py-2" href="#draw-cad" onclick="document.getElementById('mobile-nav').classList.add('hidden')">11. Draw CAD</a>
+<a class="text-on-surface py-2" href="#cad-output" onclick="document.getElementById('mobile-nav').classList.add('hidden')">12. CAD Output</a>
+<a class="text-on-surface py-2" href="#gds-import" onclick="document.getElementById('mobile-nav').classList.add('hidden')">13. GDS Import</a>
+<a class="text-on-surface py-2" href="#expose-setup" onclick="document.getElementById('mobile-nav').classList.add('hidden')">14. Expose Setup</a>
+<a class="text-on-surface py-2" href="#calibration-lut" onclick="document.getElementById('mobile-nav').classList.add('hidden')">15. Calibration LUT</a>
+<a class="text-on-surface py-2" href="#compensation" onclick="document.getElementById('mobile-nav').classList.add('hidden')">16. Compensation</a>
+<a class="text-on-surface py-2" href="#settings" onclick="document.getElementById('mobile-nav').classList.add('hidden')">17. Setting</a>
+<a class="text-on-surface py-2" href="#legacy-dlp" onclick="document.getElementById('mobile-nav').classList.add('hidden')">18. Legacy DLP</a>
+<a class="text-on-surface py-2" href="#test-mode" onclick="document.getElementById('mobile-nav').classList.add('hidden')">19. TEST Mode</a>
+<a class="text-on-surface py-2" href="#data-paths" onclick="document.getElementById('mobile-nav').classList.add('hidden')">20. Data Paths</a>
+<a class="text-on-surface py-2" href="#troubleshooting" onclick="document.getElementById('mobile-nav').classList.add('hidden')">21. Troubleshooting</a>
+<a class="text-on-surface py-2" href="#release-notes" onclick="document.getElementById('mobile-nav').classList.add('hidden')">22. Release Notes</a>
+</nav>
+</div>
+</div>
+<!-- Main Content -->
+<main class="flex-1 px-4 py-8 md:px-12 lg:px-16 overflow-x-hidden"><!-- Section 1: Home -->
+<section class="mb-24 scroll-mt-24" id="home">
+<div class="glass-panel p-8 rounded-xl mb-8 relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-accent-blue/10 to-transparent pointer-events-none"></div>
+<div class="relative z-10 flex flex-col md:flex-row gap-8 items-center">
+<div class="flex-1">
+<h1 class="font-display-lg text-display-lg text-white mb-4">MASKLESS LITHO <span class="text-accent-blue">v2.0.9</span></h1>
+<p class="text-text-muted font-body-md text-body-md mb-6 max-w-2xl">
+                    MASKLESS LITHO v2.0.9는 DLP 기반 마스크리스 리소그래피 장비를 제어하는 Windows 데스크톱 소프트웨어입니다. 이미지 또는 GDS layout을 DLP 출력용 패턴으로 준비하고, Align View와 Draw CAD를 이용해 현미경/카메라 화면 기준으로 패턴을 정렬하거나 직접 CAD 도형을 추가할 수 있습니다.
+                </p>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="bg-surface-dim border border-outline-variant px-3 py-1 rounded text-sm text-secondary font-label-caps">Build: maskless_v2_0_9.exe</span>
+<span class="bg-surface-dim border border-outline-variant px-3 py-1 rounded text-sm text-secondary font-label-caps">Single EXE Focus Mode</span>
+<span class="bg-primary-container/20 border border-primary/30 px-3 py-1 rounded text-sm text-primary font-label-caps">Load GDS</span>
+<span class="bg-primary-container/20 border border-primary/30 px-3 py-1 rounded text-sm text-primary font-label-caps">Motorized Focus</span>
+<span class="bg-primary-container/20 border border-primary/30 px-3 py-1 rounded text-sm text-primary font-label-caps">UV Keystone Calibration</span>
+<span class="bg-primary-container/20 border border-primary/30 px-3 py-1 rounded text-sm text-primary font-label-caps">Draw CAD</span>
+</div>
+</div>
+<div class="md:w-1/3">
+<img alt="Main Window" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDtxkMaPE25qotQQwrk5E6iFN51ghSQkssYpdqfe86jH8TBNdov6KTmq3TmDsBP0ivZCXBwmHfxRjD96V7IrPB__SLIRVFxrydJHrCYA21tmTfowTKWqK_4jJqfiqhgIGaO4RG0LvS5Ifkrn7hp9FqM15q64S4or7gO6Z4kEmAVrg-b7hHRXH0u9GXirsOG2G9r1RddKGIbdEUU1PnEibgH3iMXRImCuQdLcfPMDuFPehR1jP2jqZJKNV7CSvJTeraJfZOVxdgWVY"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Quick Start -->
+<section class="mb-24 scroll-mt-24" id="quick-start">
+<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-accent-blue">bolt</span> 2. Quick Start
+    </h2>
+<div class="border-b border-outline-variant mb-6">
+<div class="flex gap-8">
+<button class="tab-btn border-b-2 border-accent-blue text-white pb-4 font-bold transition-all" data-tab="overview">Overview</button>
+<button class="tab-btn border-b-2 border-transparent text-text-muted pb-4 hover:text-white transition-all" data-tab="steps">Steps</button>
+</div>
+</div>
+<div class="tab-content active" id="quick-start-overview">
+<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
+<p class="text-on-surface mb-4">장비를 처음 사용하는 사용자를 위한 빠른 시작 가이드입니다.</p>
+<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
+<li>장비 전원 확인 및 PC 연결</li>
+<li>소프트웨어 실행 및 초기화</li>
+<li>패턴 로드 및 노광 설정</li>
+</ul>
+</div>
+</div>
+<div class="tab-content hidden" id="quick-start-steps">
+<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
+<ol class="list-decimal list-inside space-y-4 text-on-surface-variant">
+<li><span class="text-white font-bold">Initialize:</span> 상단 메뉴의 Initialize 버튼을 눌러 스테이지와 광원을 초기화합니다.</li>
+<li><span class="text-white font-bold">Load Pattern:</span> Load Image 또는 Load GDS를 통해 노광할 패턴을 불러옵니다.</li>
+<li><span class="text-white font-bold">Focus:</span> Motorized Focus를 이용해 시편의 초점을 맞춥니다.</li>
+<li><span class="text-white font-bold">Expose:</span> Start 버튼을 눌러 노광을 시작합니다.</li>
+</ol>
+</div>
+</div>
+</section>
+<!-- Section 3: Safety -->
+<section class="mb-24 scroll-mt-24" id="safety">
+<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-accent-blue">health_and_safety</span> 3. Safety
+    </h2>
+<div class="bg-error-container/20 border border-error/30 p-6 rounded-xl">
+<p class="text-on-surface mb-4">장비 사용 시 다음 안전 수칙을 반드시 준수하십시오.</p>
+<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
+<li>UV 광원을 직접 눈으로 보지 마십시오.</li>
+<li>장비 가동 중 스테이지에 손을 대지 마십시오.</li>
+<li>비상 정지 버튼의 위치를 숙지하십시오.</li>
+</ul>
+</div>
+</section>
+<!-- Section 4: Install/Run -->
+<section class="mb-24 scroll-mt-24" id="install-run">
+<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-accent-blue">install_desktop</span> 4. Install/Run
+    </h2>
+<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
+<p class="text-on-surface mb-4">소프트웨어 설치 및 실행 방법입니다.</p>
+<div class="space-y-4">
+<div class="flex items-start gap-4">
+<div class="bg-accent-blue text-white w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">1</div>
+<p class="text-on-surface-variant">제공된 USB 또는 다운로드 링크에서 <code class="bg-surface-dim px-2 py-1 rounded">maskless_v2_0_9.exe</code> 파일을 실행합니다.</p>
+</div>
+<div class="flex items-start gap-4">
+<div class="bg-accent-blue text-white w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">2</div>
+<p class="text-on-surface-variant">필요한 드라이버(DLP, Camera, Stage)가 설치되어 있는지 확인합니다.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 5: Main Window -->
+<section class="mb-24 scroll-mt-24" id="main-window">
+<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-accent-blue">desktop_windows</span> 5. Main Window
+    </h2>
+<div class="grid md:grid-cols-2 gap-8">
+<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
+<p class="text-on-surface mb-4">메인 윈도우 구성 요소:</p>
+<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
+<li>Menu Bar: 파일, 설정, 도움말</li>
+<li>Toolbar: Initialize, Start, Stop</li>
+<li>Status Bar: 장비 연결 상태 및 진행률</li>
+</ul>
+</div>
+<img alt="Main Window Interface" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3R95hPdybTot0MvZu_9y2qmStbThOVNifxwWBwGL7SCEeuDAXKIu1MCsc5SF1_plPhZX0DywkDCBzVbiVgAoo4pz1AK6Fr-N_HtD3c2prZTLM6wxECUtPkQlUicpdqBZAaGbTcKKiPD6O16hG66ZNL7myQQfFNmLpDApkSWdJGrwR9nRPwdaZLFvP7CovWHKtHTxtZZG4_1Gj3O15HGrsHT-fwIIU2itOKM20rOrPQkU_XoZ-GFqMu8Tq0td03cdFNP7GD4sSUxg"/>
+</div>
+</section>
+<!-- Section 6: Motorized Focus -->
+<section class="mb-24 scroll-mt-24" id="motorized-focus">
+<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-accent-blue">center_focus_strong</span> 6. Motorized Focus
+    </h2>
+<div class="grid md:grid-cols-2 gap-8">
+<img alt="Motorized Focus Control" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8TJIKRcquSzsLb1EvuBA5x11Z19nbhUBNdTflB6TA5E-YY48GBCfTKyh8ovsQ6w6gBg0OVYpsyW3KAMJgQ2RMq5C1HaejC09PwKzNACK41P5qp2V-x3Q6Jj2KJow-Gmr5Vj6HSjjk656Z0-P3ekvI60APtPgcoEtWTx9agT2_vLUAUys6B7nN45vrIYbCI9F53kVIogABh2sMUuMJQfT5T7Q08lZwvNz_Kzk5fTHrKNQNGMiwzOMbPoUGANmY1H_VgtShwJVzVYo"/>
+<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
+<p class="text-on-surface mb-4">전동 포커스 제어:</p>
+<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
+<li>Z-axis 이동 제어</li>
+<li>Auto-focus 기능 (지원 모델 한정)</li>
+<li>미세 조정 및 위치 저장</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Section 7: Pattern Settings -->
+<section class="mb-24 scroll-mt-24" id="pattern-settings">
+<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-accent-blue">pattern</span> 7. Pattern Settings
+    </h2>
+<div class="grid md:grid-cols-2 gap-8">
+<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
+<p class="text-on-surface mb-4">패턴 설정 옵션:</p>
+<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
+<li>이미지 회전 및 반전</li>
+<li>스케일 조정</li>
+<li>노출 강도(Intensity) 설정</li>
+</ul>
+</div>
+<img alt="Pattern Settings Panel" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgngeo2iCuxGH4XsxwMwfRfZxpxQtX-wo0tH8UA2x_2zdgkwECDYylJvd20Atd3cdmqHKD9HmkZFqFeSzmTpSvhUOuxfjhFn_Ri83hAd0-3xrpetYwDYdSMuYegAtbffNEl-VEpsYe2-9foRUiOXyyn3HreYzNn6WbYQONK7OSI1CL0U4ADyBuiJHBDGoOIbuKMcBnzJpLYhyIztVxwjqo__3X5RV1godLGcv9KeM5ZoXiWT8avkupFec7tF2AS8fzY1F7NXa8nd4"/>
+</div>
+</section>
+<!-- Section 8: Align Viewer -->
+<section class="mb-24 scroll-mt-24" id="align-viewer">
+<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-accent-blue">visibility</span> 8. Align Viewer
+    </h2>
+<div class="grid md:grid-cols-2 gap-8">
+<img alt="Align Viewer Interface" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBSfImgGsZtYWxYZDLtPmCLXG7-twxh8FuLHEDCG7dzmcpy2zV-boGVuSF1xu1c7lZwSQoHQyUTuap4KddBYZ778yNjLrzEKBEEpycipcJR77m0XqhdQcNpvU9iK85NlhyKy51yPvgNwJMByeeov8DMBX9TLT2JRoa0Sagq1gE-Vh8_8DWbk_MrJm_7AFsti7VHGfcXTdmpII_O6S9x_qzHq-Q0wOpP_OaMPvxqnWiQC59Trz_MSRMkTuwEljNW1d8j_gu_xfbHKk"/>
+<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
+<p class="text-on-surface mb-4">정렬 뷰어 기능:</p>
+<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
+<li>실시간 카메라 피드 확인</li>
+<li>오버레이 투명도 조절</li>
+<li>십자선 및 그리드 표시</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Section 9: Align Wizard -->
+<section class="mb-24 scroll-mt-24" id="align-wizard">
+<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-accent-blue">auto_awesome</span> 9. Align Wizard
+    </h2>
+<div class="grid md:grid-cols-2 gap-8">
+<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
+<p class="text-on-surface mb-4">자동 정렬 마법사:</p>
+<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
+<li>마크 인식 및 자동 정렬</li>
+<li>다중 포인트 정렬 지원</li>
+<li>정렬 오차 계산 및 보정</li>
+</ul>
+</div>
+<img alt="Align Wizard Tool" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_ProAX1haEv4Z3xwgIdXG-_Rkk8wIn9ktX___OgKmiLmsFIa3gFOA249metw51loydY8n0WmQQRZItFKBRxettDZCm-3B6HlaZuvx2t3IOKriJAaiWYDdA9OOtvPtMYLxdDmO1IrCY7P5XFFkKIpf-idKitpjn48ljRWqMDj_TP6zMRacXLoVvxpCD0Y5kJ3hBD67UDoSSSnthU8aPTDXAv7J7EZwwSP-dohxXzxJq47gIgCXylT1QBuaOxQrBn9wIYn2pJHCXcc"/>
+</div>
+</section>
+<!-- Section 10: UV Keystone -->
+<section class="mb-24 scroll-mt-24" id="uv-keystone">
+<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-accent-blue">grid_on</span> 10. UV Keystone
+    </h2>
+<div class="grid md:grid-cols-2 gap-8">
+<img alt="UV Keystone Calibration" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoztpsrDzCKB8AI7-Nt6yga_ErpceNBPZJzXfrbs_n72mOD21LnOsvE6OOXnjcNSes0oBbEXIRgI4FxZuzmAeghOvsbVpzK2shZSjNExPel31eMD0Ftb7Mv_tjfEmZWLBTvDO4EQSBMRXCPCG77aC49eK0cRbXhnjDrPv2ePvNhauDLjMsqO2h9-P1kbiul1x5T04Uwh-q16x4T5xRW75_v1Mf80eKh6KOooCz9e2CROLHgg3LN3anb1UwP5rmUtHJKG9yxa2D_2k"/>
+<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
+<p class="text-on-surface mb-4">키스톤 보정:</p>
+<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
+<li>투사 왜곡 보정</li>
+<li>그리드 기반 좌표 매핑</li>
+<li>보정 데이터 저장 및 로드</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Section 11: Draw CAD -->
+<section class="mb-24 scroll-mt-24" id="draw-cad">
+<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-accent-blue">design_services</span> 11. Draw CAD
+    </h2>
+<div class="grid md:grid-cols-2 gap-8">
+<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
+<p class="text-on-surface mb-4">CAD 그리기 도구:</p>
+<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
+<li>기본 도형(선, 원, 사각형) 그리기</li>
+<li>레이어 관리</li>
+<li>좌표 기반 정밀 편집</li>
+</ul>
+</div>
+<img alt="Draw CAD Interface" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFS6gEm1DgiBioGftJMof2mus37YAC-Mpo3BaHhSN1HJMqWrgTq-p0DgJuAMfufR_Iif_a5LF539i3SJ4cDFfzovOj0Jqye4Ry_RVSXZY9lHsUpxnlCl-x30aeuQdJhliCgc-KiW7DK0Tp6XeRhIiuS2Zsj4bjLPV4vXwoV8_kX2LcA8Oy_RjAcZzSCqZKy6nanWCCxX5q1C6L9ZIBSPgf641mNO5FHV8iKUqM1mLLoLIX0w9fo4ttMJKKzs_YlnhxtVMEGiXkelI"/>
+</div>
+</section>
+<!-- Section 12: CAD Output -->
+<section class="mb-24 scroll-mt-24" id="cad-output">
+<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-accent-blue">output</span> 12. CAD Output
+    </h2>
+<div class="grid md:grid-cols-2 gap-8">
+<img alt="CAD Output Settings" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5SPb4SKQ-oxTkjGfY1N5NborQxwiO4VSWecjoy_S5AcMvURWOpK8Ee5gCFXwT_z7HE0gY7W7vDniVY7BIYU17ggh1drsP58BQl8LOBp5Fa0RvdY4Cwic9JYW-vZP7nnTLCctpswl1JVqq6RDoCeO2oL1wn1Vrl08uxoNJy08YtdD0j9B6eKURpyHKQDAleSt0pSglJwCnvyQCLmI1ZVDUHrAi4s8gQoy7HmtOJNr0dmWpU-40XmfmXeEqCt6KzESy5l07wlVQ6w0"/>
+<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
+<p class="text-on-surface mb-4">출력 설정:</p>
+<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
+<li>파일 형식 변환</li>
+<li>해상도 설정</li>
+<li>배치 출력 지원</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Section 13: GDS Import -->
+<section class="mb-24 scroll-mt-24" id="gds-import">
+<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-accent-blue">file_upload</span> 13. GDS Import
+    </h2>
+<div class="grid md:grid-cols-2 gap-8">
+<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
+<p class="text-on-surface mb-4">GDS 파일 불러오기:</p>
+<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
+<li>GDSII 표준 지원</li>
+<li>레이어 선택적 로드</li>
+<li>대용량 파일 최적화</li>
+</ul>
+</div>
+<img alt="GDS Import Tool" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjzK3jF-o2ZyRkKjwT9S0BvohKcQ__65x-S53LObyA2A0R1SuBGPyQAdWIK1HYImlqsLyqoH7LG2WZcXEcaRjtFwYPulOlupOGLjNOtxGgFLg-z8NtUowzBProXiD_zSCN-qovcyK78ZogY-6188kUvGZbynihbCuEnpQBfj7VbRoBrUoERDzuQXS6o71eBJwZf3xZaZ7mSwZ76Inwj-T8F3KeaQPmMyQZGp_oRmiaRzfF_NCSBibmfrQ974rTyzJ6JOn0h6Lccbk"/>
+</div>
+</section>
+<!-- Section 14: Expose Setup -->
+<section class="mb-24 scroll-mt-24" id="expose-setup">
+<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-accent-blue">exposure</span> 14. Expose Setup
+    </h2>
+<div class="grid md:grid-cols-2 gap-8">
+<img alt="Expose Setup Panel" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKEtrIl9bBx319s_ZB-nF6To3qDBn2eEosHBzgM9Fa-eOH_0L6POJ8Y7Fnrz0621JhdhnTwbAHMVD_xC8IhCaVtKy9RuRm6pLz6v421layDgytHlPe78izvMIJxiYv_oycJ96Nd8nbu7BEAws0-kUkR9o802emJjBkuvaSRa74H15EHRRgZHSdYr6rttJVeEDpZ7GFcGHXm4LJXouBYvWY6klLTu_O1lD-XwoRi0HUFych3NKHO2orFCNfSuXDeB6MSA_KLraS1yE"/>
+<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
+<p class="text-on-surface mb-4">노광 설정:</p>
+<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
+<li>노광 시간(Exposure Time)</li>
+<li>대기 시간(Rest Time)</li>
+<li>반복 횟수 설정</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Section 15: Calibration LUT -->
+<section class="mb-24 scroll-mt-24" id="calibration-lut">
+<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-accent-blue">tune</span> 15. Calibration LUT
+    </h2>
+<div class="grid md:grid-cols-2 gap-8">
+<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
+<p class="text-on-surface mb-4">LUT 보정:</p>
+<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
+<li>밝기 선형성 보정</li>
+<li>그레이스케일 매핑</li>
+<li>센서 데이터 기반 자동 생성</li>
+</ul>
+</div>
+<img alt="Calibration LUT Tool" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVZaorrHydstq7C271VFJCcr3lNCZMVwpuRy5ziJj8m8VWyJiOlOMXN7u3RrdZbXcWnOVRdTxV1UwmbQcK3z5HMYNKv05rJxYqrh5yyxqxHndTe379s9Ezo77HxzZ4GnIhEco_XkD5qNg9U5KPHwnw2a20xte6GyP3jZtkRWDArVQpGtLDqxfRAWGG8dfUNgNVXWuiOfGWYrT08h5VVcwY4b6N2ibINoLeOWLoTx6dKZ3oKxQij9N3WdOrZRKfQD3f3w_5wonwQQM"/>
+</div>
+</section>
+<!-- Section 16: Compensation -->
+<section class="mb-24 scroll-mt-24" id="compensation">
+<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-accent-blue">transform</span> 16. Compensation
+    </h2>
+<div class="grid md:grid-cols-2 gap-8">
+<img alt="Compensation Settings" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwOzIe8SPnAOmFsUO9BKje-FEgJ4PWWwPsp5sN0jjFZ5pzPrrjy1qdnZc1CJMuYpvsBOQTXBrGRw67SoPDTGgGqQL20GI5UD5tCNcCqsxGbVEYn4bknPmiv1ht31EbCE1t75Tm_HEvEC-TA2TVJ4h58vigxFMI0f5P2wJ3F5UiuYBDK99u8b9n6Ak-Yhn-SFy7wZmeuXe0y7r-SzDxXB2XfOxj7QnyygBwhSFXS-wDv2snAIEbXjirUNrK5ky75E25dT2YZBxNk8U"/>
+<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
+<p class="text-on-surface mb-4">보정 기능:</p>
+<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
+<li>열 팽창 보정</li>
+<li>스테이지 비선형성 보정</li>
+<li>환경 변수 입력</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Section 17: Setting -->
+<section class="mb-24 scroll-mt-24" id="settings">
+<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-accent-blue">settings</span> 17. Setting
+    </h2>
+<div class="grid md:grid-cols-2 gap-8">
+<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
+<p class="text-on-surface mb-4">시스템 설정:</p>
+<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
+<li>통신 포트(COM Port) 설정</li>
+<li>언어 선택</li>
+<li>사용자 권한 관리</li>
+</ul>
+</div>
+<img alt="System Settings" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRCC2t2iK60-JwmEZ2_SbJZO6p5z-hxMERLj0H5OfpU3-jQLD7DwmKuBpP0qAZOWz_REpatCv-2lVBY19lhznog_rYCdxZoFc3EiBDLgn8NB9wtafVxNUK7yNRtGOIryYi6n9SqXCblkpolxSJ0b9AqyIUReBCP89_HAOdPwCa247Aj6O8cuDQRMibaf916xJqBhrXz2_NUth6cQC-NJzLTnnbuRKH7paNUWe5aFk459VwuPTeOlZoYGOAQ5xiD8wya00UzqN5Ugo"/>
+</div>
+</section>
+<!-- Section 18: Legacy DLP -->
+<section class="mb-24 scroll-mt-24" id="legacy-dlp">
+<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-accent-blue">history</span> 18. Legacy DLP
+    </h2>
+<div class="grid md:grid-cols-2 gap-8">
+<img alt="Legacy DLP Support" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIK_YdNr8kSw6DGcifNpF8zYUpaXvjS8UfUR8sOmEKcWJ05coo9QBs3_jB6SujtSxmvy_pGpEnFZZGHFslkdHJWRySDzEWkOjlXRtfAOU67ZVFMejCxHBvwvaVOqq6sR_QpT9i5dGS3P3vYbxZXGgnNaB-PGYCx7e_KBvouoc-UtbulfSDT0w5OkaF9iL5myP_ApS3V0DhClLT88Ak8sR5dqt0a_Bv0AUu6ws6D-pk2QuPgnCSdF10C2Nwrevf7ByoGL8AsKyKtx8"/>
+<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
+<p class="text-on-surface mb-4">레거시 장비 지원:</p>
+<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
+<li>구형 DLP 컨트롤러 호환 모드</li>
+<li>하위 호환성 설정</li>
+<li>레거시 프로토콜 지원</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Section 19: TEST Mode -->
+<section class="mb-24 scroll-mt-24" id="test-mode">
+<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-accent-blue">science</span> 19. TEST Mode
+    </h2>
+<div class="grid md:grid-cols-2 gap-8">
+<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
+<p class="text-on-surface mb-4">테스트 모드:</p>
+<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
+<li>가상 장비 시뮬레이션</li>
+<li>디버그 로그 확인</li>
+<li>하드웨어 없이 기능 테스트</li>
+</ul>
+</div>
+<img alt="Test Mode Interface" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqOMLUjMhAxlq-ZH2mrMEGdIdLaTnLn5m0b3KnOgv-dSTT7erDuzojNcrS3fGdcgZ6xnnJVhAQgcXyJatIQiymNAX0sMYSb9bRL3NQrhmxXyJVdFTVk7oDTxH1_He0ngKjc2rSKmnBalMNf9C1mIsJ3WIMOa6eHarWI_u9aEjbWGS2xtr2H5-hwXHCVYldeavLnTYivHe1HJeNi_eSDCyCPSmnvequJML4z5vWTAsERpwEeWBIJeEeqJ_Dm755OfRbkk0O9Flob3M"/>
+</div>
+</section>
+<!-- Section 20: Data Paths -->
+<section class="mb-24 scroll-mt-24" id="data-paths">
+<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-accent-blue">folder</span> 20. Data Paths
+    </h2>
+<div class="grid md:grid-cols-2 gap-8">
+<img alt="Data Paths Configuration" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0FUeq1WpdHWFablxdJ_388WrbbeUPHdLomDmrJ-LqOMoFiGYSGBLiTnprKViM46-zL2p2dnKM1vJZbE1v5Ui4UpyO7NDE4vhNrG5ZdgrEs2-OSTayuLV-5BmHFzM_nft4HaW7GUXEb6B9gyETjJWQrvTTX45ZBqe8eyZe6icE9Xv7TKzYWJsQKntnCFvJ74aAQ3dsBsle0DVpxW0XHF89BHtt9dNj0UAxrk-iDBtoiGBPM6mPY__JLBGoPSGKD8lNHlz4YwKMXqA"/>
+<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
+<p class="text-on-surface mb-4">데이터 경로 설정:</p>
+<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
+<li>로그 저장 경로</li>
+<li>패턴 라이브러리 경로</li>
+<li>백업 폴더 설정</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Section 21: Troubleshooting -->
+<section class="mb-24 scroll-mt-24" id="troubleshooting">
+<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-accent-blue">build</span> 21. Troubleshooting
+    </h2>
+<div class="grid md:grid-cols-2 gap-8">
+<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
+<p class="text-on-surface mb-4">문제 해결 가이드:</p>
+<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
+<li>연결 오류 해결 방법</li>
+<li>이미지 왜곡 현상 조치</li>
+<li>소프트웨어 충돌 시 대처</li>
+</ul>
+</div>
+<img alt="Troubleshooting Guide" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgab-smY1Knp94RvW-keJ1jbCVzGivd5Ot1wdhzc1r4s9bgM_kPARfV2wHfTa_OSaFU4pcX3a9D3-TmooUzHI-s_qIuHrx5PuBtYpWWXZgDjXLTEMDn9aoerqfRVqt1mSlhGJhhMgc65C_50ut2cnjt8EYdR8C-YUKZk-GtNpdAATRTbRvP8SJz1t2H1sjHsJA2Kq8ffu8vK_t6p2fVD1cbwAot4X5O88dsxNT7jRNtmgllblCKSBH_VFIViATrDiAEzoCAJyT2gA"/>
+</div>
+</section>
+<!-- Section 22: Release Notes -->
+<section class="mb-24 scroll-mt-24" id="release-notes">
+<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
+<span class="material-symbols-outlined text-accent-blue">new_releases</span> 22. Release Notes
+    </h2>
+<div class="grid md:grid-cols-2 gap-8">
+<img alt="Release Notes" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpkuv8pA-hNhCCoyWI_gvdDeFYxq0x5bRdWAU2P6P8GEfXpl06AcOXCxyNesHqwNVoweyt2b39FziPKb_AEpBUZo_-wmN34patWBe5pmddppVycZxTj4ocfa_0wDNSbpGPsRw7tvr6yXLzUU804xNWnvbvwTmHDy0VxtLHiyXD71CdqZgwuwM1gvAuLxiyaJdBSBFSHSUtITZLuv9GRartfIFoJwupL3zzg8bQmxdeY4iDjxy2-wgEP4y-qJFwaR3nGCaRb0C69vA"/>
+<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
+<p class="text-on-surface mb-4">v2.0.9 업데이트 내역:</p>
+<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
+<li>GDS 로드 속도 개선</li>
+<li>UI 다크 모드 최적화</li>
+<li>버그 수정 및 안정성 향상</li>
+</ul>
+</div>
+</div>
+</section>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const tabs = document.querySelectorAll('.tab-btn');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const section = tab.closest('section');
+                if (!section) return;
+                
+                const targetId = tab.getAttribute('data-tab');
+                const sectionId = section.id;
+                
+                // Update Buttons in this section only
+                section.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('border-accent-blue', 'text-white', 'font-bold');
+                    btn.classList.add('border-transparent', 'text-text-muted');
+                });
+                
+                // Activate clicked button
+                tab.classList.remove('border-transparent', 'text-text-muted');
+                tab.classList.add('border-accent-blue', 'text-white', 'font-bold');
+                
+                // Hide all tab contents in this section
+                section.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.add('hidden');
+                    content.classList.remove('active');
+                });
+                
+                // Show target content
+                const targetContent = document.getElementById(`${sectionId}-${targetId}`);
+                if (targetContent) {
+                    targetContent.classList.remove('hidden');
+                    targetContent.classList.add('active');
+                }
+            });
+        });
+    });
+</script></main>
+</div>
+<!-- Footer -->
+<footer class="bg-surface-container-low dark:bg-surface-container-lowest border-t border-outline-variant dark:border-outline py-8 px-4 mt-auto">
+<div class="max-w-container-max mx-auto flex flex-col items-center justify-center gap-4 text-body-sm text-secondary text-center">
+<div class="font-label-caps text-label-caps tracking-widest text-primary">PLANCK INC.</div>
+<p class="">© 2024 PLANCK INC. All rights reserved.</p>
+</div>
+</footer>
+<script>
+        // Active Nav State Logic
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('border-primary', 'bg-primary-container/10', 'text-primary', 'font-bold');
+                link.classList.add('border-transparent', 'text-on-surface-variant');
+                
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.remove('border-transparent', 'text-on-surface-variant');
+                    link.classList.add('border-primary', 'bg-primary-container/10', 'text-primary', 'font-bold');
+                }
+            });
+        });
+    </script>
+</body></html>
