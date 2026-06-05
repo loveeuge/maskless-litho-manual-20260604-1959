@@ -1,716 +1,759 @@
-<!DOCTYPE html>
-
-<html class="dark" lang="ko"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>MASKLESS LITHO Manual</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&amp;family=Hanken+Grotesk:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "accent-blue": "#3A6AFD",
-                        "inverse-on-surface": "#27313c",
-                        "surface-dim": "#09141e",
-                        "outline-variant": "#434655",
-                        "surface-main": "#00060F",
-                        "inverse-surface": "#d9e3f2",
-                        "on-secondary": "#2c303c",
-                        "tertiary-container": "#c95100",
-                        "surface-container-low": "#121d27",
-                        "surface-container-highest": "#2b3641",
-                        "secondary-container": "#454956",
-                        "error": "#ffb4ab",
-                        "surface-elevated": "#242834",
-                        "text-muted": "#A0AEC0",
-                        "on-background": "#d9e3f2",
-                        "on-primary": "#002780",
-                        "on-tertiary-container": "#ffffff",
-                        "surface-tint": "#b6c4ff",
-                        "text-primary": "#FFFFFF",
-                        "on-error": "#690005",
-                        "on-surface-variant": "#c3c5d8",
-                        "surface-container-lowest": "#050f19",
-                        "on-tertiary-fixed": "#351000",
-                        "on-surface": "#d9e3f2",
-                        "primary-container": "#3a6afd",
-                        "surface-bright": "#303a45",
-                        "surface-container-high": "#212b36",
-                        "on-primary-fixed": "#001550",
-                        "tertiary-fixed-dim": "#ffb694",
-                        "on-secondary-container": "#b5b8c7",
-                        "secondary": "#c3c6d6",
-                        "surface-container": "#16212b",
-                        "primary-fixed-dim": "#b6c4ff",
-                        "tertiary": "#ffb694",
-                        "secondary-fixed": "#dfe2f2",
-                        "error-container": "#93000a",
-                        "surface-variant": "#2b3641",
-                        "outline": "#8d90a1",
-                        "on-error-container": "#ffdad6",
-                        "secondary-fixed-dim": "#c3c6d6",
-                        "inverse-primary": "#104fe4",
-                        "surface": "#09141e",
-                        "on-primary-fixed-variant": "#003ab3",
-                        "on-tertiary-fixed-variant": "#7b2f00",
-                        "on-secondary-fixed-variant": "#434653",
-                        "on-secondary-fixed": "#171b27",
-                        "tertiary-fixed": "#ffdbcc",
-                        "on-tertiary": "#571f00",
-                        "on-primary-container": "#ffffff",
-                        "primary-fixed": "#dce1ff",
-                        "primary": "#b6c4ff",
-                        "background": "#09141e"
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.125rem",
-                        "lg": "0.25rem",
-                        "xl": "0.5rem",
-                        "full": "0.75rem"
-                    },
-                    "spacing": {
-                        "margin-mobile": "16px",
-                        "container-max": "1280px",
-                        "gutter": "24px",
-                        "base": "8px",
-                        "margin-desktop": "48px",
-                        "sidebar-width": "280px"
-                    },
-                    "fontFamily": {
-                        "label-caps": ["JetBrains Mono"],
-                        "display-lg": ["Montserrat"],
-                        "headline-lg": ["Montserrat"],
-                        "headline-lg-mobile": ["Montserrat"],
-                        "headline-sm": ["Montserrat"],
-                        "headline-md": ["Montserrat"],
-                        "body-md": ["Hanken Grotesk"],
-                        "body-sm": ["Hanken Grotesk"]
-                    },
-                    "fontSize": {
-                        "label-caps": ["12px", { "lineHeight": "1.0", "letterSpacing": "0.1em", "fontWeight": "500" }],
-                        "display-lg": ["48px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700" }],
-                        "headline-lg": ["32px", { "lineHeight": "1.3", "fontWeight": "600" }],
-                        "headline-lg-mobile": ["24px", { "lineHeight": "1.3", "fontWeight": "600" }],
-                        "headline-md": ["24px", { "lineHeight": "1.4", "fontWeight": "600" }],
-                        "headline-sm": ["20px", { "lineHeight": "1.5", "fontWeight": "600" }],
-                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
-                        "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }]
-                    }
-                }
-            }
-        }
-    </script>
-<style>
-        body { background-color: #00060F; color: #FFFFFF; }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .glass-panel {
-            background: rgba(36, 40, 52, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(58, 106, 253, 0.2);
-        }
-        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #00060F; }
-        ::-webkit-scrollbar-thumb { background: #242834; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #3A6AFD; }
-    </style>
-</head>
-<body class="antialiased min-h-screen flex flex-col font-body-md text-body-md selection:bg-accent-blue selection:text-white">
-<!-- TopAppBar -->
-<header class="bg-surface dark:bg-inverse-surface text-primary dark:text-inverse-primary font-headline-sm text-headline-sm docked full-width top-0 sticky border-b border-outline-variant dark:border-outline flat no shadows flex justify-between items-center px-margin-page h-16 w-full z-50">
-<div class="flex items-center gap-4 px-4 md:px-margin-desktop">
-<button class="md:hidden text-on-surface-variant hover:text-primary transition-colors" onclick="document.getElementById('mobile-nav').classList.toggle('hidden')">
-<span class="material-symbols-outlined text-2xl">menu</span>
-</button>
-<div class="font-headline-md text-headline-md font-bold text-primary dark:text-inverse-primary tracking-tight">MASKLESS LITHO Manual</div>
+        <!doctype html>
+        <html lang="ko" class="dark">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>MASKLESS LITHO v2.0.9 Manual</title>
+          <link rel="icon" href="data:,">
+          <style>
+:root {
+  --bg: #07090d;
+  --paper: #0f141a;
+  --panel: #161d25;
+  --panel-2: #1d2630;
+  --ink: #eef3f7;
+  --muted: #aeb8c3;
+  --line: #2e3945;
+  --accent: #35b8a6;
+  --accent-2: #5d8cff;
+  --warm: #f2b56b;
+  --danger: #ff7d7d;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: Inter, "Segoe UI", "Noto Sans KR", Arial, sans-serif;
+  line-height: 1.68;
+}
+a { color: inherit; }
+code {
+  background: #090d13;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  color: #d9fff7;
+  font-family: "JetBrains Mono", Consolas, monospace;
+  font-size: .92em;
+  padding: .12rem .34rem;
+}
+pre {
+  overflow: auto;
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #090d13;
+}
+pre code { border: 0; background: transparent; padding: 0; color: #eaf2ff; }
+.layout {
+  display: grid;
+  grid-template-columns: 286px minmax(0, 1fr);
+  min-height: 100vh;
+}
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: auto;
+  padding: 1.25rem 1rem;
+  border-right: 1px solid var(--line);
+  background: #080c12;
+}
+.brand { margin-bottom: 1.1rem; }
+.brand strong { display: block; font-size: 1.02rem; letter-spacing: .02em; }
+.brand small { color: var(--muted); }
+.nav { display: flex; flex-direction: column; gap: .18rem; }
+.nav a {
+  display: flex;
+  align-items: center;
+  gap: .58rem;
+  padding: .45rem .52rem;
+  border-left: 3px solid transparent;
+  border-radius: 0 6px 6px 0;
+  color: var(--muted);
+  font-size: .91rem;
+  text-decoration: none;
+}
+.nav a:hover, .nav a.active {
+  border-left-color: var(--accent);
+  background: #132029;
+  color: #fff;
+}
+.nav span {
+  color: #a9d9d2;
+  font-family: Consolas, monospace;
+  font-size: .78rem;
+  min-width: 1.2rem;
+}
+.mobile-nav {
+  display: none;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding: .75rem;
+  border-bottom: 1px solid var(--line);
+  background: #080c12;
+}
+.mobile-nav select {
+  width: 100%;
+  padding: .75rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #111923;
+  color: var(--ink);
+}
+.content {
+  width: 100%;
+  max-width: 1220px;
+  padding: 2rem clamp(1rem, 3vw, 3.25rem) 5rem;
+}
+.manual-section {
+  scroll-margin-top: 1rem;
+  margin-bottom: 4.5rem;
+  padding-bottom: 3.5rem;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.section-kicker {
+  margin-bottom: .3rem;
+  color: #94d8cf;
+  font-family: Consolas, monospace;
+  font-size: .8rem;
+  letter-spacing: .1em;
+}
+.section-title-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .75rem;
+}
+h1, h2, h3 { margin: 0 0 .75rem; line-height: 1.18; letter-spacing: 0; }
+h1 { font-size: clamp(2rem, 4vw, 4rem); max-width: 760px; }
+h2 { font-size: clamp(1.65rem, 3vw, 2.55rem); }
+h3 { margin-top: 1rem; font-size: 1.05rem; }
+.section-intro {
+  max-width: 920px;
+  margin: .25rem 0 1.2rem;
+  color: var(--muted);
+  font-size: 1.04rem;
+}
+.section-badge, .badges span {
+  display: inline-flex;
+  align-items: center;
+  padding: .23rem .5rem;
+  border: 1px solid rgba(53,184,166,.45);
+  border-radius: 5px;
+  background: rgba(53,184,166,.11);
+  color: #c9fff7;
+  font-size: .78rem;
+  font-weight: 700;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 560px);
+  gap: 1.25rem;
+  align-items: start;
+}
+.hero-copy {
+  padding: 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: linear-gradient(145deg, #141a21, #0d1218);
+}
+.badges { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1rem; }
+.hero-actions { display: flex; gap: .7rem; flex-wrap: wrap; margin: 1rem 0; }
+.hero-actions a {
+  display: inline-flex;
+  padding: .72rem 1rem;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #06100f;
+  font-weight: 800;
+  text-decoration: none;
+}
+.hero-actions .secondary-action { background: transparent; color: #d6fff9; border: 1px solid rgba(53,184,166,.6); }
+.callout {
+  margin: 1rem 0;
+  padding: .85rem 1rem;
+  border-left: 4px solid var(--accent);
+  border-radius: 7px;
+  background: rgba(53,184,166,.08);
+  color: #dfe9ef;
+}
+.callout.warn { border-left-color: var(--warm); background: rgba(242,181,107,.1); }
+.manual-figure {
+  margin: 1rem 0;
+  padding: .7rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--panel);
+}
+.manual-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  background: #05080c;
+}
+.manual-figure figcaption {
+  margin-top: .55rem;
+  color: var(--muted);
+  font-size: .9rem;
+}
+.tabs {
+  margin-top: 1rem;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(22,29,37,.75);
+}
+.tab-list {
+  display: flex;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--line);
+  background: #0d141b;
+}
+.tab-button {
+  appearance: none;
+  border: 0;
+  border-right: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-weight: 800;
+  padding: .82rem 1rem;
+  white-space: nowrap;
+}
+.tab-button.active {
+  background: #18242d;
+  color: #fff;
+  box-shadow: inset 0 -3px 0 var(--accent);
+}
+.tab-panel { display: none; padding: 1rem 1.1rem 1.2rem; }
+.tab-panel.active { display: block; }
+ul, ol { padding-left: 1.25rem; }
+li { margin: .36rem 0; }
+.table-wrap {
+  overflow: auto;
+  margin: 1rem 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+table {
+  width: 100%;
+  min-width: 680px;
+  border-collapse: collapse;
+}
+th, td {
+  padding: .72rem .78rem;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+th {
+  background: #121a22;
+  color: #fff;
+  text-align: left;
+}
+tr:last-child td { border-bottom: 0; }
+@media (max-width: 900px) {
+  .layout { display: block; }
+  .sidebar { display: none; }
+  .mobile-nav { display: block; }
+  .content { padding: 1rem 1rem 4rem; }
+  .hero-grid { grid-template-columns: 1fr; }
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.55rem; }
+  table { min-width: 560px; }
+}
+</style>
+        </head>
+        <body>
+          <div class="mobile-nav"><select id="mobileSelect"><option value="#home">01. Home</option><option value="#quick-start">02. Quick Start</option><option value="#safety">03. Safety</option><option value="#install-run">04. Install/Run</option><option value="#main-window">05. Main Window</option><option value="#motorized-focus">06. Motorized Focus</option><option value="#pattern-settings">07. Pattern Settings</option><option value="#align-viewer">08. Align Viewer</option><option value="#align-wizard">09. Align Wizard</option><option value="#uv-keystone">10. UV Keystone</option><option value="#draw-cad">11. Draw CAD</option><option value="#cad-output">12. CAD Output</option><option value="#gds-import">13. GDS Import</option><option value="#expose-setup">14. Expose Setup</option><option value="#calibration-lut">15. Calibration LUT</option><option value="#compensation">16. Compensation</option><option value="#settings">17. Settings</option><option value="#legacy-dlp">18. Legacy DLP</option><option value="#test-mode">19. TEST Mode</option><option value="#data-paths">20. Data Paths</option><option value="#troubleshooting">21. Troubleshooting</option><option value="#release-notes">22. Release Notes</option></select></div>
+          <div class="layout">
+            <aside class="sidebar">
+              <div class="brand">
+                <strong>MASKLESS LITHO Manual</strong>
+                <small>v2.0.9 operator guide</small>
+              </div>
+              <nav class="nav" id="nav"><a href="#home"><span>01</span>Home</a><a href="#quick-start"><span>02</span>Quick Start</a><a href="#safety"><span>03</span>Safety</a><a href="#install-run"><span>04</span>Install/Run</a><a href="#main-window"><span>05</span>Main Window</a><a href="#motorized-focus"><span>06</span>Motorized Focus</a><a href="#pattern-settings"><span>07</span>Pattern Settings</a><a href="#align-viewer"><span>08</span>Align Viewer</a><a href="#align-wizard"><span>09</span>Align Wizard</a><a href="#uv-keystone"><span>10</span>UV Keystone</a><a href="#draw-cad"><span>11</span>Draw CAD</a><a href="#cad-output"><span>12</span>CAD Output</a><a href="#gds-import"><span>13</span>GDS Import</a><a href="#expose-setup"><span>14</span>Expose Setup</a><a href="#calibration-lut"><span>15</span>Calibration LUT</a><a href="#compensation"><span>16</span>Compensation</a><a href="#settings"><span>17</span>Settings</a><a href="#legacy-dlp"><span>18</span>Legacy DLP</a><a href="#test-mode"><span>19</span>TEST Mode</a><a href="#data-paths"><span>20</span>Data Paths</a><a href="#troubleshooting"><span>21</span>Troubleshooting</a><a href="#release-notes"><span>22</span>Release Notes</a></nav>
+            </aside>
+            <main class="content">
+              <section id="home" class="manual-section">
+          <div class="section-kicker">01</div>
+          <div class="section-title-row"><h2>MASKLESS LITHO v2.0.9</h2><span class="section-badge">operator manual</span></div>
+          <p class="section-intro">DLP 마스크리스 리소그래피 장비에서 이미지, GDS, Draw CAD 패턴을 정렬하고 노광하는 Windows 데스크톱 프로그램입니다.</p>
+          <div class="hero-grid">
+  <div class="hero-copy">
+    <div class="badges">
+      <span>최신 기준: README + ui/main_window.py</span>
+      <span>Build: maskless_v2_0_9.exe</span>
+      <span>단일 EXE Focus Mode</span>
+      <span>GitHub Pages One Page</span>
+    </div>
+    <h1>작업자가 바로 따라 할 수 있는 기능별 운용 메뉴얼</h1>
+    <p>이 문서는 v2.0.9 릴리즈 기준으로 장비 연결, TEST Mode, Pattern Settings, Align Viewer, UV Keystone, Draw CAD, GDS Import, Expose Setup까지 실제 작업 흐름에 맞춰 정리했습니다.</p>
+    <div class="hero-actions">
+      <a href="#quick-start">빠른 시작</a>
+      <a href="#safety" class="secondary-action">안전 체크</a>
+    </div>
+    <div class="callout">
+      <strong>핵심 변경:</strong> Motorized Focus는 별도 실행 파일이 아니라 <code>maskless_v2_0_9.exe --motorized-focus</code> 내부 모드로 실행됩니다.
+    </div>
+  </div>
+  <figure class="manual-figure"><img src="assets/img/01_main_window_v2_0_9.png" alt="메인 화면 전체 지도입니다. Setting, Initialize, Motorized Focus, Pattern Settings, Align Viewer, Expose Setup 위치를 먼저 확인합니다." loading="lazy"><figcaption>메인 화면 전체 지도입니다. Setting, Initialize, Motorized Focus, Pattern Settings, Align Viewer, Expose Setup 위치를 먼저 확인합니다.</figcaption></figure>
 </div>
-<div class="flex items-center gap-4 px-4 md:px-margin-desktop">
-<a class="bg-accent-blue hover:bg-blue-600 text-white font-label-caps text-label-caps py-2 px-4 rounded transition-colors hidden sm:flex items-center gap-2" href="#quick-start">
-<span class="material-symbols-outlined text-sm">bolt</span> Quick Start
-            </a>
-<button class="text-on-surface-variant hover:text-primary transition-colors">
-<span class="material-symbols-outlined text-2xl">search</span>
-</button>
-</div>
-</header>
-<div class="flex flex-1 max-w-[1600px] mx-auto w-full">
-<!-- NavigationDrawer (Desktop) -->
-<aside class="hidden md:flex bg-surface dark:bg-inverse-surface text-primary dark:text-inverse-primary font-body-md text-body-md h-[calc(100vh-64px)] w-sidebar-width sticky top-16 border-r border-outline-variant dark:border-outline flat no shadows flex-col py-8 gap-base overflow-y-auto">
-<div class="px-6 mb-4">
-<h2 class="font-headline-sm text-headline-sm font-bold text-primary mb-2">Documentation</h2>
-</div>
-<nav class="flex flex-col gap-1 px-4">
-<a class="nav-link border-l-4 border-primary bg-primary-container/10 text-primary font-bold px-4 py-2 rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#home">
-<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span> 1. Home
-                </a>
-<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#quick-start">
-<span class="material-symbols-outlined">bolt</span> 2. Quick Start
-                </a>
-<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#safety">
-<span class="material-symbols-outlined">health_and_safety</span> 3. Safety
-                </a>
-<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#install-run">
-<span class="material-symbols-outlined">install_desktop</span> 4. Install/Run
-                </a>
-<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#main-window">
-<span class="material-symbols-outlined">desktop_windows</span> 5. Main Window
-                </a>
-<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#motorized-focus">
-<span class="material-symbols-outlined">center_focus_strong</span> 6. Motorized Focus
-                </a>
-<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#pattern-settings">
-<span class="material-symbols-outlined">pattern</span> 7. Pattern Settings
-                </a>
-<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#align-viewer">
-<span class="material-symbols-outlined">visibility</span> 8. Align Viewer
-                </a>
-<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#align-wizard">
-<span class="material-symbols-outlined">auto_awesome</span> 9. Align Wizard
-                </a>
-<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#uv-keystone">
-<span class="material-symbols-outlined">grid_on</span> 10. UV Keystone
-                </a>
-<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#draw-cad">
-<span class="material-symbols-outlined">design_services</span> 11. Draw CAD
-                </a>
-<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#cad-output">
-<span class="material-symbols-outlined">output</span> 12. CAD Output
-                </a>
-<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#gds-import">
-<span class="material-symbols-outlined">file_upload</span> 13. GDS Import
-                </a>
-<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#expose-setup">
-<span class="material-symbols-outlined">exposure</span> 14. Expose Setup
-                </a>
-<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#calibration-lut">
-<span class="material-symbols-outlined">tune</span> 15. Calibration LUT
-                </a>
-<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#compensation">
-<span class="material-symbols-outlined">transform</span> 16. Compensation
-                </a>
-<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#settings">
-<span class="material-symbols-outlined">settings</span> 17. Setting
-                </a>
-<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#legacy-dlp">
-<span class="material-symbols-outlined">history</span> 18. Legacy DLP
-                </a>
-<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#test-mode">
-<span class="material-symbols-outlined">science</span> 19. TEST Mode
-                </a>
-<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#data-paths">
-<span class="material-symbols-outlined">folder</span> 20. Data Paths
-                </a>
-<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#troubleshooting">
-<span class="material-symbols-outlined">build</span> 21. Troubleshooting
-                </a>
-<a class="nav-link text-on-surface-variant dark:text-surface-variant hover:text-on-surface hover:bg-secondary-container/20 px-4 py-2 border-l-4 border-transparent rounded-r transition-all duration-200 ease-in-out flex items-center gap-3" href="#release-notes">
-<span class="material-symbols-outlined">new_releases</span> 22. Release Notes
-                </a>
-</nav>
-</aside>
-<!-- Mobile Nav Drawer (Hidden by default) -->
-<div class="hidden fixed inset-0 z-40 bg-black/80 backdrop-blur-sm md:hidden" id="mobile-nav">
-<div class="bg-surface-elevated w-64 h-full shadow-2xl flex flex-col p-4 overflow-y-auto">
-<button class="self-end text-text-muted mb-4" onclick="document.getElementById('mobile-nav').classList.add('hidden')">
-<span class="material-symbols-outlined">close</span>
-</button>
-<nav class="flex flex-col gap-2">
-<a class="text-on-surface py-2" href="#home" onclick="document.getElementById('mobile-nav').classList.add('hidden')">1. Home</a>
-<a class="text-on-surface py-2" href="#quick-start" onclick="document.getElementById('mobile-nav').classList.add('hidden')">2. Quick Start</a>
-<a class="text-on-surface py-2" href="#safety" onclick="document.getElementById('mobile-nav').classList.add('hidden')">3. Safety</a>
-<a class="text-on-surface py-2" href="#install-run" onclick="document.getElementById('mobile-nav').classList.add('hidden')">4. Install/Run</a>
-<a class="text-on-surface py-2" href="#main-window" onclick="document.getElementById('mobile-nav').classList.add('hidden')">5. Main Window</a>
-<a class="text-on-surface py-2" href="#motorized-focus" onclick="document.getElementById('mobile-nav').classList.add('hidden')">6. Motorized Focus</a>
-<a class="text-on-surface py-2" href="#pattern-settings" onclick="document.getElementById('mobile-nav').classList.add('hidden')">7. Pattern Settings</a>
-<a class="text-on-surface py-2" href="#align-viewer" onclick="document.getElementById('mobile-nav').classList.add('hidden')">8. Align Viewer</a>
-<a class="text-on-surface py-2" href="#align-wizard" onclick="document.getElementById('mobile-nav').classList.add('hidden')">9. Align Wizard</a>
-<a class="text-on-surface py-2" href="#uv-keystone" onclick="document.getElementById('mobile-nav').classList.add('hidden')">10. UV Keystone</a>
-<a class="text-on-surface py-2" href="#draw-cad" onclick="document.getElementById('mobile-nav').classList.add('hidden')">11. Draw CAD</a>
-<a class="text-on-surface py-2" href="#cad-output" onclick="document.getElementById('mobile-nav').classList.add('hidden')">12. CAD Output</a>
-<a class="text-on-surface py-2" href="#gds-import" onclick="document.getElementById('mobile-nav').classList.add('hidden')">13. GDS Import</a>
-<a class="text-on-surface py-2" href="#expose-setup" onclick="document.getElementById('mobile-nav').classList.add('hidden')">14. Expose Setup</a>
-<a class="text-on-surface py-2" href="#calibration-lut" onclick="document.getElementById('mobile-nav').classList.add('hidden')">15. Calibration LUT</a>
-<a class="text-on-surface py-2" href="#compensation" onclick="document.getElementById('mobile-nav').classList.add('hidden')">16. Compensation</a>
-<a class="text-on-surface py-2" href="#settings" onclick="document.getElementById('mobile-nav').classList.add('hidden')">17. Setting</a>
-<a class="text-on-surface py-2" href="#legacy-dlp" onclick="document.getElementById('mobile-nav').classList.add('hidden')">18. Legacy DLP</a>
-<a class="text-on-surface py-2" href="#test-mode" onclick="document.getElementById('mobile-nav').classList.add('hidden')">19. TEST Mode</a>
-<a class="text-on-surface py-2" href="#data-paths" onclick="document.getElementById('mobile-nav').classList.add('hidden')">20. Data Paths</a>
-<a class="text-on-surface py-2" href="#troubleshooting" onclick="document.getElementById('mobile-nav').classList.add('hidden')">21. Troubleshooting</a>
-<a class="text-on-surface py-2" href="#release-notes" onclick="document.getElementById('mobile-nav').classList.add('hidden')">22. Release Notes</a>
-</nav>
-</div>
-</div>
-<!-- Main Content -->
-<main class="flex-1 px-4 py-8 md:px-12 lg:px-16 overflow-x-hidden"><!-- Section 1: Home -->
-<section class="mb-24 scroll-mt-24" id="home">
-<div class="glass-panel p-8 rounded-xl mb-8 relative overflow-hidden">
-<div class="absolute inset-0 bg-gradient-to-br from-accent-blue/10 to-transparent pointer-events-none"></div>
-<div class="relative z-10 flex flex-col md:flex-row gap-8 items-center">
-<div class="flex-1">
-<h1 class="font-display-lg text-display-lg text-white mb-4">MASKLESS LITHO <span class="text-accent-blue">v2.0.9</span></h1>
-<p class="text-text-muted font-body-md text-body-md mb-6 max-w-2xl">
-                    MASKLESS LITHO v2.0.9는 DLP 기반 마스크리스 리소그래피 장비를 제어하는 Windows 데스크톱 소프트웨어입니다. 이미지 또는 GDS layout을 DLP 출력용 패턴으로 준비하고, Align View와 Draw CAD를 이용해 현미경/카메라 화면 기준으로 패턴을 정렬하거나 직접 CAD 도형을 추가할 수 있습니다.
-                </p>
-<div class="flex flex-wrap gap-2 mb-4">
-<span class="bg-surface-dim border border-outline-variant px-3 py-1 rounded text-sm text-secondary font-label-caps">Build: maskless_v2_0_9.exe</span>
-<span class="bg-surface-dim border border-outline-variant px-3 py-1 rounded text-sm text-secondary font-label-caps">Single EXE Focus Mode</span>
-<span class="bg-primary-container/20 border border-primary/30 px-3 py-1 rounded text-sm text-primary font-label-caps">Load GDS</span>
-<span class="bg-primary-container/20 border border-primary/30 px-3 py-1 rounded text-sm text-primary font-label-caps">Motorized Focus</span>
-<span class="bg-primary-container/20 border border-primary/30 px-3 py-1 rounded text-sm text-primary font-label-caps">UV Keystone Calibration</span>
-<span class="bg-primary-container/20 border border-primary/30 px-3 py-1 rounded text-sm text-primary font-label-caps">Draw CAD</span>
-</div>
-</div>
-<div class="md:w-1/3">
-<img alt="Main Window" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDtxkMaPE25qotQQwrk5E6iFN51ghSQkssYpdqfe86jH8TBNdov6KTmq3TmDsBP0ivZCXBwmHfxRjD96V7IrPB__SLIRVFxrydJHrCYA21tmTfowTKWqK_4jJqfiqhgIGaO4RG0LvS5Ifkrn7hp9FqM15q64S4or7gO6Z4kEmAVrg-b7hHRXH0u9GXirsOG2G9r1RddKGIbdEUU1PnEibgH3iMXRImCuQdLcfPMDuFPehR1jP2jqZJKNV7CSvJTeraJfZOVxdgWVY"/>
-</div>
-</div>
-</div>
-</section>
-<!-- Section 2: Quick Start -->
-<section class="mb-24 scroll-mt-24" id="quick-start">
-<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
-<span class="material-symbols-outlined text-accent-blue">bolt</span> 2. Quick Start
-    </h2>
-<div class="border-b border-outline-variant mb-6">
-<div class="flex gap-8">
-<button class="tab-btn border-b-2 border-accent-blue text-white pb-4 font-bold transition-all" data-tab="overview">Overview</button>
-<button class="tab-btn border-b-2 border-transparent text-text-muted pb-4 hover:text-white transition-all" data-tab="steps">Steps</button>
-</div>
-</div>
-<div class="tab-content active" id="quick-start-overview">
-<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
-<p class="text-on-surface mb-4">장비를 처음 사용하는 사용자를 위한 빠른 시작 가이드입니다.</p>
-<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
-<li>장비 전원 확인 및 PC 연결</li>
-<li>소프트웨어 실행 및 초기화</li>
-<li>패턴 로드 및 노광 설정</li>
-</ul>
-</div>
-</div>
-<div class="tab-content hidden" id="quick-start-steps">
-<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
-<ol class="list-decimal list-inside space-y-4 text-on-surface-variant">
-<li><span class="text-white font-bold">Initialize:</span> 상단 메뉴의 Initialize 버튼을 눌러 스테이지와 광원을 초기화합니다.</li>
-<li><span class="text-white font-bold">Load Pattern:</span> Load Image 또는 Load GDS를 통해 노광할 패턴을 불러옵니다.</li>
-<li><span class="text-white font-bold">Focus:</span> Motorized Focus를 이용해 시편의 초점을 맞춥니다.</li>
-<li><span class="text-white font-bold">Expose:</span> Start 버튼을 눌러 노광을 시작합니다.</li>
+        </section><section id="quick-start" class="manual-section">
+          <div class="section-kicker">02</div>
+          <div class="section-title-row"><h2>Quick Start</h2></div>
+          <p class="section-intro">장비 연결부터 첫 노광까지 가장 짧은 경로입니다. 실제 샘플을 올리기 전에 반드시 TEST Mode와 DLP 표시 대상을 먼저 확인하세요.</p>
+          <div class="tabs"><div class="tab-list" role="tablist"><button class="tab-button active" type="button" role="tab" aria-selected="true" data-tab-target="quick-start-tab-0">첫 노광 7단계</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="quick-start-tab-1">실수 방지</button></div><div class="tab-panels"><div class="tab-panel active" id="quick-start-tab-0" role="tabpanel"><ol>
+  <li><code>dist\maskless_v2_0_9.exe</code>를 실행합니다.</li>
+  <li><code>Setting &gt; Display</code>에서 DLP 모니터가 <code>MASKLESS LITHO Display</code>로 잡혔는지 확인하고 <code>Apply</code>를 누릅니다.</li>
+  <li>장비 없이 UI만 확인할 때는 <code>Setting &gt; Expose &gt; TEST Mode</code>를 켭니다. 실제 노광 전에는 의도한 상태인지 다시 확인합니다.</li>
+  <li><code>Load image</code>로 PNG/BMP/JPG를 불러오거나 <code>Load GDS</code>로 GDS/GDS2 layout을 DLP PNG로 변환합니다.</li>
+  <li><code>Align Viewer &gt; Show</code>를 눌러 카메라 화면 위에 노광 패턴을 겹쳐 보고, 위치와 크기를 맞춥니다.</li>
+  <li>카메라 기준 정렬은 <code>Align Wizard</code>의 1/2/4 Point Align을 사용하고, 실제 UV 출력 왜곡은 <code>UV Keystone Calibration</code>으로 보정합니다.</li>
+  <li><code>Expose Setup &gt; Add</code>로 row를 추가한 뒤 Exposure, Rotation, Intensity, Rest, Repeat 값을 확인하고 <code>Start</code>를 누릅니다.</li>
 </ol>
-</div>
-</div>
-</section>
-<!-- Section 3: Safety -->
-<section class="mb-24 scroll-mt-24" id="safety">
-<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
-<span class="material-symbols-outlined text-accent-blue">health_and_safety</span> 3. Safety
-    </h2>
-<div class="bg-error-container/20 border border-error/30 p-6 rounded-xl">
-<p class="text-on-surface mb-4">장비 사용 시 다음 안전 수칙을 반드시 준수하십시오.</p>
-<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
-<li>UV 광원을 직접 눈으로 보지 마십시오.</li>
-<li>장비 가동 중 스테이지에 손을 대지 마십시오.</li>
-<li>비상 정지 버튼의 위치를 숙지하십시오.</li>
+<figure class="manual-figure"><img src="assets/img/03_main_window_with_expose_row.png" alt="Expose Setup에 row가 추가된 상태입니다. Start 전에는 파일명, Exposure, Intensity, Repeat 값을 다시 확인합니다." loading="lazy"><figcaption>Expose Setup에 row가 추가된 상태입니다. Start 전에는 파일명, Exposure, Intensity, Repeat 값을 다시 확인합니다.</figcaption></figure></div><div class="tab-panel" id="quick-start-tab-1" role="tabpanel"><ul>
+  <li>DLP 출력 화면은 일반 모니터가 아니라 실제 DLP 컨트롤러 화면이어야 합니다.</li>
+  <li><code>LED ON</code>은 수동 확인용입니다. 켜 둔 상태에서는 GDS Import와 Motorized Focus 같은 일부 작업이 차단됩니다.</li>
+  <li>노광 중 이상이 있으면 <code>Stop</code>을 먼저 누르고, DLP 화면이 검은 화면으로 돌아왔는지 확인합니다.</li>
+  <li>CAD/GDS를 사용할 때는 현재 렌즈의 CAD scale profile과 DLP display 설정이 맞아야 합니다.</li>
+</ul></div></div></div>
+        </section><section id="safety" class="manual-section">
+          <div class="section-kicker">03</div>
+          <div class="section-title-row"><h2>Safety</h2></div>
+          <p class="section-intro">UV/DLP 출력은 샘플과 장비에 직접 영향을 줍니다. TEST Mode, Stop, display 선택, manual LED 상태를 작업 전후로 확인하세요.</p>
+          <div class="tabs"><div class="tab-list" role="tablist"><button class="tab-button active" type="button" role="tab" aria-selected="true" data-tab-target="safety-tab-0">체크리스트</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="safety-tab-1">차단되는 작업</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="safety-tab-2">DLP display</button></div><div class="tab-panels"><div class="tab-panel active" id="safety-tab-0" role="tabpanel"><ul>
+  <li>DLP 컨트롤러와 광학 경로가 안전하게 준비되어 있는지 확인합니다.</li>
+  <li><code>Setting &gt; Display</code>에서 DLP 모니터를 선택한 뒤 <code>Apply</code>를 누릅니다.</li>
+  <li>노광 전 <code>Exposure (ms)</code>, <code>Intensity</code>, <code>Repeat</code>, <code>Rest (ms)</code> 값을 재확인합니다.</li>
+  <li>실제 장비 사용 시 <code>TEST Mode</code>가 꺼져 있어야 하고, 장비 없는 UI 테스트라면 켜져 있어야 합니다.</li>
+  <li>수동 <code>LED ON</code> 상태에서 창을 닫거나 다른 workflow로 넘어가지 않습니다.</li>
+  <li>비상 시에는 <code>Stop</code>을 누른 뒤 DLP 출력이 black output으로 복귀했는지 확인합니다.</li>
+</ul></div><div class="tab-panel" id="safety-tab-1" role="tabpanel"><p>v2.0.9에서는 충돌을 막기 위해 sequence, CAD Expose, manual LED ON 중에는 Motorized Focus 실행을 차단합니다.</p>
+<ul>
+  <li><code>An exposure sequence or CAD exposure is running. Stop it before opening Motorized Focus.</code></li>
+  <li><code>Exposure is running. Stop it before opening Motorized Focus.</code></li>
+  <li><code>Manual LED output is active. Turn LED OFF before opening Motorized Focus.</code></li>
 </ul>
-</div>
-</section>
-<!-- Section 4: Install/Run -->
-<section class="mb-24 scroll-mt-24" id="install-run">
-<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
-<span class="material-symbols-outlined text-accent-blue">install_desktop</span> 4. Install/Run
-    </h2>
-<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
-<p class="text-on-surface mb-4">소프트웨어 설치 및 실행 방법입니다.</p>
-<div class="space-y-4">
-<div class="flex items-start gap-4">
-<div class="bg-accent-blue text-white w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">1</div>
-<p class="text-on-surface-variant">제공된 USB 또는 다운로드 링크에서 <code class="bg-surface-dim px-2 py-1 rounded">maskless_v2_0_9.exe</code> 파일을 실행합니다.</p>
-</div>
-<div class="flex items-start gap-4">
-<div class="bg-accent-blue text-white w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">2</div>
-<p class="text-on-surface-variant">필요한 드라이버(DLP, Camera, Stage)가 설치되어 있는지 확인합니다.</p>
-</div>
-</div>
-</div>
-</section>
-<!-- Section 5: Main Window -->
-<section class="mb-24 scroll-mt-24" id="main-window">
-<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
-<span class="material-symbols-outlined text-accent-blue">desktop_windows</span> 5. Main Window
-    </h2>
-<div class="grid md:grid-cols-2 gap-8">
-<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
-<p class="text-on-surface mb-4">메인 윈도우 구성 요소:</p>
-<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
-<li>Menu Bar: 파일, 설정, 도움말</li>
-<li>Toolbar: Initialize, Start, Stop</li>
-<li>Status Bar: 장비 연결 상태 및 진행률</li>
+<figure class="manual-figure"><img src="assets/img/07_motorized_focus_blocked_sequence.png" alt="노광 또는 수동 LED 상태에서는 Focus 실행 전에 Stop 또는 LED OFF가 필요합니다." loading="lazy"><figcaption>노광 또는 수동 LED 상태에서는 Focus 실행 전에 Stop 또는 LED OFF가 필요합니다.</figcaption></figure></div><div class="tab-panel" id="safety-tab-2" role="tabpanel"><p>DLP monitor 선택이 틀리면 작업자 모니터에 전체 화면 패턴이 뜨거나 실제 DLP에는 출력되지 않을 수 있습니다. <code>Current display</code>와 GPU 표시를 확인하세요.</p>
+<figure class="manual-figure"><img src="assets/img/09_setting_display.png" alt="Setting > Display 탭입니다. 연결된 monitor 목록에서 DLP display를 선택하고 Apply로 적용합니다." loading="lazy"><figcaption>Setting > Display 탭입니다. 연결된 monitor 목록에서 DLP display를 선택하고 Apply로 적용합니다.</figcaption></figure></div></div></div>
+        </section><section id="install-run" class="manual-section">
+          <div class="section-kicker">04</div>
+          <div class="section-title-row"><h2>Install/Run</h2></div>
+          <p class="section-intro">릴리즈 exe 실행, 개발 환경 실행, requirements 설치, Motorized Focus 내부 모드 실행 방법을 구분해서 정리했습니다.</p>
+          <div class="tabs"><div class="tab-list" role="tablist"><button class="tab-button active" type="button" role="tab" aria-selected="true" data-tab-target="install-run-tab-0">릴리즈 실행</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="install-run-tab-1">개발 환경 실행</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="install-run-tab-2">설치/Focus</button></div><div class="tab-panels"><div class="tab-panel active" id="install-run-tab-0" role="tabpanel"><pre><code>cd C:\GitProjects\MASKLESSLITHO
+dist\maskless_v2_0_9.exe</code></pre>
+                    <p>v2.0.9 배포 zip은 <code>maskless_v2_0_9.exe</code> 단일 실행 파일 구성을 기준으로 합니다. 일반 작업자는 이 exe만 실행하면 됩니다.</p></div><div class="tab-panel" id="install-run-tab-1" role="tabpanel"><pre><code>cd C:\GitProjects\MASKLESSLITHO
+.\venv64\Scripts\python.exe main.py</code></pre>
+                    <p>소스에서 실행할 때는 repository의 가상환경과 requirements가 준비되어 있어야 합니다.</p></div><div class="tab-panel" id="install-run-tab-2" role="tabpanel"><pre><code>python -m venv venv64
+.\venv64\Scripts\python.exe -m pip install -r requirements.txt</code></pre>
+                    <p>Motorized Focus만 내부 모드로 직접 띄워야 할 때는 다음 형식을 사용합니다.</p>
+                    <pre><code>maskless_v2_0_9.exe --motorized-focus</code></pre>
+                    <p>일반 사용자에게는 별도 <code>Motorized_Focus.exe</code>를 전달하지 않아도 됩니다.</p></div></div></div>
+        </section><section id="main-window" class="manual-section">
+          <div class="section-kicker">05</div>
+          <div class="section-title-row"><h2>Main Window</h2></div>
+          <p class="section-intro">메인 창은 장비 초기화, 패턴 로드, 정렬, CAD 작성, 노광 sequence를 한 화면에서 진행하도록 구성되어 있습니다.</p>
+          <div class="table-wrap"><table>
+  <thead><tr><th>영역</th><th>역할</th><th>작업자가 확인할 것</th></tr></thead>
+  <tbody>
+    <tr><td><code>Setting</code></td><td>General, Display, Align View, Expose, Help 설정</td><td>DLP display, TEST Mode, LUT, Compensation, UV Keystone 상태</td></tr>
+    <tr><td><code>Initialize</code></td><td>DLP controller Power ON 초기화</td><td>실제 장비 연결 전 TEST Mode 여부</td></tr>
+    <tr><td><code>Motorized Focus</code></td><td>초점 제어 UI 실행</td><td>노광/수동 LED 중이면 먼저 Stop 또는 LED OFF</td></tr>
+    <tr><td><code>Pattern Settings</code></td><td>이미지/GDS 로드, 회전, intensity, manual LED</td><td>파일명, rotation, intensity 단위</td></tr>
+    <tr><td><code>Align Viewer</code></td><td>카메라 화면 위 overlay 정렬</td><td>Show, Opacity, Draw CAD, Align Wizard</td></tr>
+    <tr><td><code>Expose Setup</code></td><td>노광 sequence 추가/편집/실행</td><td>Exposure, Rest, Repeat, Rotation, Intensity</td></tr>
+  </tbody>
+</table></div>
+<figure class="manual-figure"><img src="assets/img/01_main_window_v2_0_9.png" alt="메인 화면 전체 배치입니다. 작업 흐름은 위에서 아래로 진행하면 가장 자연스럽습니다." loading="lazy"><figcaption>메인 화면 전체 배치입니다. 작업 흐름은 위에서 아래로 진행하면 가장 자연스럽습니다.</figcaption></figure>
+        </section><section id="motorized-focus" class="manual-section">
+          <div class="section-kicker">06</div>
+          <div class="section-title-row"><h2>Motorized Focus</h2></div>
+          <p class="section-intro">v2.0.9에서 추가된 Focus 런처입니다. 별도 sidecar exe 없이 현재 릴리즈 exe의 내부 모드로 Focus 창을 띄웁니다.</p>
+          <div class="tabs"><div class="tab-list" role="tablist"><button class="tab-button active" type="button" role="tab" aria-selected="true" data-tab-target="motorized-focus-tab-0">무엇을 하나</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="motorized-focus-tab-1">실행 전 조건</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="motorized-focus-tab-2">메시지/해결</button></div><div class="tab-panels"><div class="tab-panel active" id="motorized-focus-tab-0" role="tabpanel"><p><code>Initialize</code> 아래의 <code>Motorized Focus</code> 버튼을 누르면 <code>maskless_v2_0_9.exe --motorized-focus</code> 내부 모드가 실행됩니다.</p>
+<p>릴리즈 배포 시에는 <code>maskless_v2_0_9.exe</code> 하나만 전달하면 되며, 별도 Focus exe가 없어도 됩니다.</p>
+<figure class="manual-figure"><img src="assets/img/02_initialize_motorized_focus_area.png" alt="Initialize 아래에 배치된 Motorized Focus 버튼입니다." loading="lazy"><figcaption>Initialize 아래에 배치된 Motorized Focus 버튼입니다.</figcaption></figure></div><div class="tab-panel" id="motorized-focus-tab-1" role="tabpanel"><ul>
+  <li>sequence 노광이 실행 중이면 Focus를 열 수 없습니다.</li>
+  <li>CAD Expose Now가 실행 중이면 Focus를 열 수 없습니다.</li>
+  <li>manual <code>LED ON</code> 상태이면 Focus를 열 수 없습니다.</li>
+  <li>이미 Focus 창이 떠 있으면 새로 열지 않고 기존 실행 상태를 알려줍니다.</li>
+</ul></div><div class="tab-panel" id="motorized-focus-tab-2" role="tabpanel"><div class="table-wrap"><table>
+  <thead><tr><th>메시지</th><th>원인</th><th>해결</th></tr></thead>
+  <tbody>
+    <tr><td><code>An exposure sequence or CAD exposure is running...</code></td><td>sequence 또는 CAD Expose Now 실행 중</td><td><code>Stop</code> 후 다시 실행</td></tr>
+    <tr><td><code>Manual LED output is active...</code></td><td>수동 LED가 켜져 있음</td><td><code>LED OFF</code> 후 다시 실행</td></tr>
+    <tr><td><code>Motorized Focus is already running.</code></td><td>Focus 창 중복 실행 시도</td><td>기존 Focus 창을 사용</td></tr>
+    <tr><td><code>Motorized Focus failed to launch</code></td><td>내부 모드 실행 실패</td><td>릴리즈 exe 위치와 로그 확인</td></tr>
+  </tbody>
+</table></div></div></div></div>
+        </section><section id="pattern-settings" class="manual-section">
+          <div class="section-kicker">07</div>
+          <div class="section-title-row"><h2>Pattern Settings</h2></div>
+          <p class="section-intro">노광할 패턴을 불러오고, 회전과 intensity를 지정하며, 수동 LED 확인을 수행하는 기본 입력 영역입니다.</p>
+          <div class="tabs"><div class="tab-list" role="tablist"><button class="tab-button active" type="button" role="tab" aria-selected="true" data-tab-target="pattern-settings-tab-0">버튼/입력창</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="pattern-settings-tab-1">작업 순서</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="pattern-settings-tab-2">주의</button></div><div class="tab-panels"><div class="tab-panel active" id="pattern-settings-tab-0" role="tabpanel"><ul>
+  <li><code>Load image</code>: PNG/BMP/JPG 같은 일반 이미지를 불러옵니다.</li>
+  <li><code>Load GDS</code>: .gds/.gds2 layout을 layer/datatype 선택 후 DLP 해상도 PNG로 변환합니다.</li>
+  <li><code>Image Rotation (deg)</code>: 현재 패턴의 회전값을 -180~180도 범위에서 0.1도 단위로 조정합니다.</li>
+  <li><code>Intensity (%)</code>: 기본 intensity 입력입니다. Calibration LUT가 켜지면 lens 기준 mW/cm<sup>2</sup> 단위로 전환될 수 있습니다.</li>
+  <li><code>LED ON</code>: 정렬 확인용 수동 DLP 출력입니다. 실제 샘플에서 사용할 때는 노광 위험을 고려해야 합니다.</li>
+</ul></div><div class="tab-panel" id="pattern-settings-tab-1" role="tabpanel"><ol>
+  <li>일반 이미지면 <code>Load image</code>, layout이면 <code>Load GDS</code>를 누릅니다.</li>
+  <li>파일명이 <code>N/A</code>에서 실제 파일명으로 바뀌었는지 확인합니다.</li>
+  <li>필요하면 <code>Image Rotation (deg)</code>를 조정합니다.</li>
+  <li>Intensity 값을 확인합니다. Calibration이 켜져 있으면 lens 선택도 함께 확인합니다.</li>
+  <li>정렬 확인이 필요할 때만 <code>LED ON</code>을 사용하고, 다음 작업 전에는 <code>LED OFF</code>로 되돌립니다.</li>
+</ol>
+<figure class="manual-figure"><img src="assets/img/03_main_window_with_expose_row.png" alt="Pattern Settings에서 불러온 파일은 Expose Setup의 Add로 sequence row에 들어갑니다." loading="lazy"><figcaption>Pattern Settings에서 불러온 파일은 Expose Setup의 Add로 sequence row에 들어갑니다.</figcaption></figure></div><div class="tab-panel" id="pattern-settings-tab-2" role="tabpanel"><ul>
+  <li>활성 UV Keystone profile이 있으면 Load image, CAD, GDS, Sequence, Expose Now, manual LED ON 출력 직전에 DLP pixmap이 보정됩니다.</li>
+  <li>GDS 결과는 편집 가능한 Draw CAD 도형이 아니라 흑백 DLP PNG입니다.</li>
+  <li>수동 <code>LED ON</code> 상태에서는 GDS Import와 Motorized Focus 같은 작업이 차단될 수 있습니다.</li>
+</ul></div></div></div>
+        </section><section id="align-viewer" class="manual-section">
+          <div class="section-kicker">08</div>
+          <div class="section-title-row"><h2>Align Viewer</h2></div>
+          <p class="section-intro">카메라 또는 현미경 화면 위에 노광 패턴을 overlay로 띄워 실제 샘플 위치와 패턴 위치를 맞추는 기능입니다.</p>
+          <div class="tabs"><div class="tab-list" role="tablist"><button class="tab-button active" type="button" role="tab" aria-selected="true" data-tab-target="align-viewer-tab-0">조작</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="align-viewer-tab-1">Reset/회전</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="align-viewer-tab-2">주의</button></div><div class="tab-panels"><div class="tab-panel active" id="align-viewer-tab-0" role="tabpanel"><ul>
+  <li><code>Show</code>: Align View 창을 표시하거나 숨깁니다.</li>
+  <li><code>Opacity</code>: overlay 투명도를 조정합니다.</li>
+  <li>창 드래그: Align View 위치를 이동합니다.</li>
+  <li>모서리 드래그: Align View 크기를 조정합니다.</li>
+  <li><code>Shift</code> + 크기 조정: 기존 이미지 비율을 유지하며 리사이즈합니다.</li>
+  <li><code>Draw CAD</code>: 현재 Align View와 같은 이미지 평면 위에서 CAD View를 엽니다.</li>
+</ul></div><div class="tab-panel" id="align-viewer-tab-1" role="tabpanel"><p><code>Setting &gt; Align View</code>에서 <code>Rotation Angle</code>, <code>Reset Align</code>, <code>Align Wizard</code>, UV Keystone 상태를 관리합니다.</p>
+<figure class="manual-figure"><img src="assets/img/10_setting_align_view_uv_keystone.png" alt="Setting > Align View 탭입니다. Align View 회전, 초기화, Align Wizard, UV Keystone 상태를 한곳에서 확인합니다." loading="lazy"><figcaption>Setting > Align View 탭입니다. Align View 회전, 초기화, Align Wizard, UV Keystone 상태를 한곳에서 확인합니다.</figcaption></figure></div><div class="tab-panel" id="align-viewer-tab-2" role="tabpanel"><ul>
+  <li>Align View는 화면 표시 정렬용입니다. 실제 DLP 출력 왜곡 보정은 <code>UV Keystone Calibration</code>이 담당합니다.</li>
+  <li>Draw CAD를 열려면 이미지가 먼저 로드되어 있어야 하고, Align View가 <code>Show</code> 상태여야 합니다.</li>
+  <li>Draw CAD 작업 전에는 Align View를 <code>MASKLESS LITHO Display</code> 위가 아닌 작업자 화면 쪽으로 옮겨야 합니다.</li>
+</ul></div></div></div>
+        </section><section id="align-wizard" class="manual-section">
+          <div class="section-kicker">09</div>
+          <div class="section-title-row"><h2>Align Wizard</h2></div>
+          <p class="section-intro">현미경 화면과 Align View overlay 사이의 기준점을 잡아 1점, 2점, 4점 정렬을 계산하는 도우미입니다.</p>
+          <div class="tabs"><div class="tab-list" role="tablist"><button class="tab-button active" type="button" role="tab" aria-selected="true" data-tab-target="align-wizard-tab-0">정렬 방식</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="align-wizard-tab-1">UV Keystone과 차이</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="align-wizard-tab-2">메시지</button></div><div class="tab-panels"><div class="tab-panel active" id="align-wizard-tab-0" role="tabpanel"><ul>
+  <li><code>1 Point Align</code>: 한 기준점으로 위치 이동을 맞춥니다.</li>
+  <li><code>2 Point Align</code>: 위치, 회전, scale을 함께 맞춥니다.</li>
+  <li><code>4 Point Keystone Align</code>: Align View 창의 표시 keystone을 맞춥니다.</li>
+  <li><code>Preview Calculate</code>: 적용 전 미리 계산 결과를 확인합니다.</li>
+  <li><code>Apply</code>: 계산된 transform을 Align View에 적용합니다.</li>
+</ul></div><div class="tab-panel" id="align-wizard-tab-1" role="tabpanel"><p><code>4 Point Keystone Align</code>은 Align View 표시를 맞추는 기능입니다. <code>UV Keystone Calibration</code>은 실제 DLP에서 조사되는 UV 패턴 자체를 역왜곡해 보정하는 별도 기능입니다.</p>
+<figure class="manual-figure"><img src="assets/img/14_align_wizard_with_uv_keystone.png" alt="Align Wizard 안에 UV Keystone Calibration 버튼이 추가되어 있습니다." loading="lazy"><figcaption>Align Wizard 안에 UV Keystone Calibration 버튼이 추가되어 있습니다.</figcaption></figure></div><div class="tab-panel" id="align-wizard-tab-2" role="tabpanel"><ul>
+  <li><code>Align View is not open. Click Show first, then run Align Wizard.</code>: Align View를 먼저 Show로 열어야 합니다.</li>
+  <li><code>Calculate a preview before applying.</code>: Apply 전 Preview Calculate가 필요합니다.</li>
+  <li><code>Preview failed</code> 또는 <code>Apply failed</code>: 기준점 선택과 Align View 상태를 다시 확인합니다.</li>
+</ul></div></div></div>
+        </section><section id="uv-keystone" class="manual-section">
+          <div class="section-kicker">10</div>
+          <div class="section-title-row"><h2>UV Keystone Calibration</h2></div>
+          <p class="section-intro">실제 DLP 출력 PNG를 역보정하는 v2.0.9 핵심 보정 기능입니다. Align View 의존 없이 DLP display와 카메라 화면 클릭만으로 17점 profile을 만듭니다.</p>
+          <div class="tabs"><div class="tab-list" role="tablist"><button class="tab-button active" type="button" role="tab" aria-selected="true" data-tab-target="uv-keystone-tab-0">무엇을 하나</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="uv-keystone-tab-1">작업 순서</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="uv-keystone-tab-2">적용/해제</button></div><div class="tab-panels"><div class="tab-panel active" id="uv-keystone-tab-0" role="tabpanel"><ul>
+  <li>DLP에 raw 기준점을 하나씩 출력하고, 카메라/현미경 화면에서 해당 위치를 클릭합니다.</li>
+  <li>17개 기준점은 outer 4x4 grid와 center point로 구성됩니다.</li>
+  <li>각 기준점은 4회 반복 클릭해 측정 안정성을 높입니다.</li>
+  <li>완료되면 <code>.maskkeystone</code> profile이 저장되고 활성화됩니다.</li>
 </ul>
-</div>
-<img alt="Main Window Interface" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3R95hPdybTot0MvZu_9y2qmStbThOVNifxwWBwGL7SCEeuDAXKIu1MCsc5SF1_plPhZX0DywkDCBzVbiVgAoo4pz1AK6Fr-N_HtD3c2prZTLM6wxECUtPkQlUicpdqBZAaGbTcKKiPD6O16hG66ZNL7myQQfFNmLpDApkSWdJGrwR9nRPwdaZLFvP7CovWHKtHTxtZZG4_1Gj3O15HGrsHT-fwIIU2itOKM20rOrPQkU_XoZ-GFqMu8Tq0td03cdFNP7GD4sSUxg"/>
-</div>
-</section>
-<!-- Section 6: Motorized Focus -->
-<section class="mb-24 scroll-mt-24" id="motorized-focus">
-<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
-<span class="material-symbols-outlined text-accent-blue">center_focus_strong</span> 6. Motorized Focus
-    </h2>
-<div class="grid md:grid-cols-2 gap-8">
-<img alt="Motorized Focus Control" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8TJIKRcquSzsLb1EvuBA5x11Z19nbhUBNdTflB6TA5E-YY48GBCfTKyh8ovsQ6w6gBg0OVYpsyW3KAMJgQ2RMq5C1HaejC09PwKzNACK41P5qp2V-x3Q6Jj2KJow-Gmr5Vj6HSjjk656Z0-P3ekvI60APtPgcoEtWTx9agT2_vLUAUys6B7nN45vrIYbCI9F53kVIogABh2sMUuMJQfT5T7Q08lZwvNz_Kzk5fTHrKNQNGMiwzOMbPoUGANmY1H_VgtShwJVzVYo"/>
-<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
-<p class="text-on-surface mb-4">전동 포커스 제어:</p>
-<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
-<li>Z-axis 이동 제어</li>
-<li>Auto-focus 기능 (지원 모델 한정)</li>
-<li>미세 조정 및 위치 저장</li>
+<figure class="manual-figure"><img src="assets/img/18_uv_keystone_17_point_map.png" alt="17점 보정 기준점 지도입니다. 각 점은 DLP raw 기준 위치를 나타냅니다." loading="lazy"><figcaption>17점 보정 기준점 지도입니다. 각 점은 DLP raw 기준 위치를 나타냅니다.</figcaption></figure></div><div class="tab-panel" id="uv-keystone-tab-1" role="tabpanel"><ol>
+  <li><code>Setting &gt; Display</code>에서 DLP monitor가 선택되어 있는지 확인합니다.</li>
+  <li><code>Setting &gt; Align View &gt; Align Wizard</code>를 엽니다.</li>
+  <li><code>UV Keystone Calibration</code>을 누릅니다.</li>
+  <li><code>Start Calibration</code>을 누릅니다.</li>
+  <li>DLP에 표시되는 raw point를 카메라 화면에서 찾아 클릭합니다.</li>
+  <li>각 point를 4회 반복 클릭합니다.</li>
+  <li>17점이 끝나면 profile이 저장되고 활성화됩니다.</li>
+</ol>
+<figure class="manual-figure"><img src="assets/img/15_uv_keystone_calibration_window.png" alt="UV Keystone Calibration 시작 화면입니다." loading="lazy"><figcaption>UV Keystone Calibration 시작 화면입니다.</figcaption></figure>
+<figure class="manual-figure"><img src="assets/img/16_uv_keystone_progress_state.png" alt="Point 1/17, Click 1/4 같은 진행 상태가 표시됩니다." loading="lazy"><figcaption>Point 1/17, Click 1/4 같은 진행 상태가 표시됩니다.</figcaption></figure></div><div class="tab-panel" id="uv-keystone-tab-2" role="tabpanel"><p>활성 profile은 일반 이미지, CAD, GDS, Sequence, Expose Now, manual LED ON 출력 직전에 적용됩니다. Calibration 중에는 기존 profile을 우회해 raw DLP 기준점이 출력됩니다.</p>
+<ul>
+  <li>상태 확인: <code>Setting &gt; Align View</code>의 UV Keystone status</li>
+  <li>일시 해제: <code>Disable UV Keystone</code></li>
+  <li>활성 profile 삭제/초기화: <code>Clear UV Keystone</code></li>
+  <li>저장 위치: <code>%USERPROFILE%\.maskless_v2\keystone\*.maskkeystone</code></li>
 </ul>
-</div>
-</div>
-</section>
-<!-- Section 7: Pattern Settings -->
-<section class="mb-24 scroll-mt-24" id="pattern-settings">
-<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
-<span class="material-symbols-outlined text-accent-blue">pattern</span> 7. Pattern Settings
-    </h2>
-<div class="grid md:grid-cols-2 gap-8">
-<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
-<p class="text-on-surface mb-4">패턴 설정 옵션:</p>
-<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
-<li>이미지 회전 및 반전</li>
-<li>스케일 조정</li>
-<li>노출 강도(Intensity) 설정</li>
+<figure class="manual-figure"><img src="assets/img/17_uv_keystone_single_raw_point.png" alt="Calibration 중 출력되는 raw DLP 기준점 예시입니다." loading="lazy"><figcaption>Calibration 중 출력되는 raw DLP 기준점 예시입니다.</figcaption></figure></div></div></div>
+        </section><section id="draw-cad" class="manual-section">
+          <div class="section-kicker">11</div>
+          <div class="section-title-row"><h2>Draw CAD</h2></div>
+          <p class="section-intro">Align View와 같은 이미지 평면 위에서 도형을 직접 그리고, DLP-ready PNG 또는 편집 가능한 .maskcad 문서로 저장하는 기능입니다.</p>
+          <div class="tabs"><div class="tab-list" role="tablist"><button class="tab-button active" type="button" role="tab" aria-selected="true" data-tab-target="draw-cad-tab-0">도구</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="draw-cad-tab-1">정밀 입력</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="draw-cad-tab-2">단축키/주의</button></div><div class="tab-panels"><div class="tab-panel active" id="draw-cad-tab-0" role="tabpanel"><ul>
+  <li><code>Select</code>: 기존 도형 선택, 이동, handle 편집</li>
+  <li><code>Rect</code>: 사각형 작성</li>
+  <li><code>Ellipse</code>: 원/타원 작성</li>
+  <li><code>Line</code>: 선 작성</li>
+  <li><code>Polyline</code>: 여러 점을 이어 열린 선 작성</li>
+  <li><code>Polygon</code>: 여러 점을 이어 닫힌 면 작성, 내부 채움 노광</li>
+  <li><code>Measure</code>: 거리와 각도 측정, 노광 결과에는 포함되지 않음</li>
 </ul>
-</div>
-<img alt="Pattern Settings Panel" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgngeo2iCuxGH4XsxwMwfRfZxpxQtX-wo0tH8UA2x_2zdgkwECDYylJvd20Atd3cdmqHKD9HmkZFqFeSzmTpSvhUOuxfjhFn_Ri83hAd0-3xrpetYwDYdSMuYegAtbffNEl-VEpsYe2-9foRUiOXyyn3HreYzNn6WbYQONK7OSI1CL0U4ADyBuiJHBDGoOIbuKMcBnzJpLYhyIztVxwjqo__3X5RV1godLGcv9KeM5ZoXiWT8avkupFec7tF2AS8fzY1F7NXa8nd4"/>
-</div>
-</section>
-<!-- Section 8: Align Viewer -->
-<section class="mb-24 scroll-mt-24" id="align-viewer">
-<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
-<span class="material-symbols-outlined text-accent-blue">visibility</span> 8. Align Viewer
-    </h2>
-<div class="grid md:grid-cols-2 gap-8">
-<img alt="Align Viewer Interface" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBSfImgGsZtYWxYZDLtPmCLXG7-twxh8FuLHEDCG7dzmcpy2zV-boGVuSF1xu1c7lZwSQoHQyUTuap4KddBYZ778yNjLrzEKBEEpycipcJR77m0XqhdQcNpvU9iK85NlhyKy51yPvgNwJMByeeov8DMBX9TLT2JRoa0Sagq1gE-Vh8_8DWbk_MrJm_7AFsti7VHGfcXTdmpII_O6S9x_qzHq-Q0wOpP_OaMPvxqnWiQC59Trz_MSRMkTuwEljNW1d8j_gu_xfbHKk"/>
-<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
-<p class="text-on-surface mb-4">정렬 뷰어 기능:</p>
-<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
-<li>실시간 카메라 피드 확인</li>
-<li>오버레이 투명도 조절</li>
-<li>십자선 및 그리드 표시</li>
+<figure class="manual-figure"><img src="assets/img/19_draw_cad_view_shapes.png" alt="CAD View에서 여러 도형을 작성한 예시입니다." loading="lazy"><figcaption>CAD View에서 여러 도형을 작성한 예시입니다.</figcaption></figure></div><div class="tab-panel" id="draw-cad-tab-1" role="tabpanel"><ul>
+  <li><code>Grid Snap</code>: 점을 지정한 um 간격에 맞춥니다.</li>
+  <li><code>Grid um</code>: grid 간격을 설정합니다.</li>
+  <li><code>W um</code>, <code>H um</code>: 선택 도형의 실제 크기 입력입니다.</li>
+  <li><code>Stroke um</code>: 선 또는 외곽선 두께입니다.</li>
+  <li><code>um/px X</code>, <code>um/px Y</code>: 현재 렌즈의 카메라 pixel-to-um scale입니다.</li>
+  <li><code>Save Scale</code>: 현재 렌즈 scale profile을 저장합니다.</li>
+  <li><code>Array Nx/Ny</code>, <code>Pitch X/Y</code>: 선택 도형을 배열 복제합니다.</li>
 </ul>
-</div>
-</div>
-</section>
-<!-- Section 9: Align Wizard -->
-<section class="mb-24 scroll-mt-24" id="align-wizard">
-<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
-<span class="material-symbols-outlined text-accent-blue">auto_awesome</span> 9. Align Wizard
-    </h2>
-<div class="grid md:grid-cols-2 gap-8">
-<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
-<p class="text-on-surface mb-4">자동 정렬 마법사:</p>
-<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
-<li>마크 인식 및 자동 정렬</li>
-<li>다중 포인트 정렬 지원</li>
-<li>정렬 오차 계산 및 보정</li>
+<figure class="manual-figure"><img src="assets/img/20_draw_cad_tools_palette.png" alt="Draw CAD Tools 패널입니다. 도구, grid, scale, array, output controls가 모여 있습니다." loading="lazy"><figcaption>Draw CAD Tools 패널입니다. 도구, grid, scale, array, output controls가 모여 있습니다.</figcaption></figure></div><div class="tab-panel" id="draw-cad-tab-2" role="tabpanel"><ul>
+  <li><code>Ctrl+Z</code>: Undo, <code>Ctrl+Y</code>: Redo</li>
+  <li><code>Delete</code>: 선택 도형 삭제</li>
+  <li><code>Enter</code>: Polyline/Polygon 작성 완료</li>
+  <li><code>Esc</code>: 현재 작업 취소 또는 CAD View 닫기</li>
+  <li>출력 전 최소 한 개 이상의 도형이 필요합니다.</li>
+  <li>출력 전 현재 렌즈의 scale profile을 저장해야 합니다.</li>
 </ul>
-</div>
-<img alt="Align Wizard Tool" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_ProAX1haEv4Z3xwgIdXG-_Rkk8wIn9ktX___OgKmiLmsFIa3gFOA249metw51loydY8n0WmQQRZItFKBRxettDZCm-3B6HlaZuvx2t3IOKriJAaiWYDdA9OOtvPtMYLxdDmO1IrCY7P5XFFkKIpf-idKitpjn48ljRWqMDj_TP6zMRacXLoVvxpCD0Y5kJ3hBD67UDoSSSnthU8aPTDXAv7J7EZwwSP-dohxXzxJq47gIgCXylT1QBuaOxQrBn9wIYn2pJHCXcc"/>
-</div>
-</section>
-<!-- Section 10: UV Keystone -->
-<section class="mb-24 scroll-mt-24" id="uv-keystone">
-<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
-<span class="material-symbols-outlined text-accent-blue">grid_on</span> 10. UV Keystone
-    </h2>
-<div class="grid md:grid-cols-2 gap-8">
-<img alt="UV Keystone Calibration" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoztpsrDzCKB8AI7-Nt6yga_ErpceNBPZJzXfrbs_n72mOD21LnOsvE6OOXnjcNSes0oBbEXIRgI4FxZuzmAeghOvsbVpzK2shZSjNExPel31eMD0Ftb7Mv_tjfEmZWLBTvDO4EQSBMRXCPCG77aC49eK0cRbXhnjDrPv2ePvNhauDLjMsqO2h9-P1kbiul1x5T04Uwh-q16x4T5xRW75_v1Mf80eKh6KOooCz9e2CROLHgg3LN3anb1UwP5rmUtHJKG9yxa2D_2k"/>
-<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
-<p class="text-on-surface mb-4">키스톤 보정:</p>
-<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
-<li>투사 왜곡 보정</li>
-<li>그리드 기반 좌표 매핑</li>
-<li>보정 데이터 저장 및 로드</li>
+<figure class="manual-figure"><img src="assets/img/21_draw_cad_view_and_tools_composite.png" alt="CAD View와 Tools 패널을 함께 보여주는 캡쳐입니다. 작업 위치와 도구 위치를 함께 설명할 때 사용합니다." loading="lazy"><figcaption>CAD View와 Tools 패널을 함께 보여주는 캡쳐입니다. 작업 위치와 도구 위치를 함께 설명할 때 사용합니다.</figcaption></figure></div></div></div>
+        </section><section id="cad-output" class="manual-section">
+          <div class="section-kicker">12</div>
+          <div class="section-title-row"><h2>CAD Output</h2></div>
+          <p class="section-intro">Draw CAD 결과를 저장, 다시 불러오기, PNG export, Pattern Settings 적용, 즉시 노광까지 이어주는 출력 영역입니다.</p>
+          <div class="tabs"><div class="tab-list" role="tablist"><button class="tab-button active" type="button" role="tab" aria-selected="true" data-tab-target="cad-output-tab-0">버튼 설명</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="cad-output-tab-1">주의/메시지</button></div><div class="tab-panels"><div class="tab-panel active" id="cad-output-tab-0" role="tabpanel"><ul>
+  <li><code>Save CAD</code>: 편집 가능한 <code>.maskcad</code> JSON 문서를 저장합니다.</li>
+  <li><code>Load CAD</code>: 저장된 <code>.maskcad</code> 문서를 다시 열어 편집합니다.</li>
+  <li><code>Export PNG</code>: DLP 해상도 PNG와 paired <code>.maskcad</code>를 원하는 위치에 저장합니다.</li>
+  <li><code>Apply</code>: 생성된 PNG를 메인 <code>Pattern Settings</code>에 로드합니다.</li>
+  <li><code>Expose Now</code>: 확인창 후 CAD 결과를 1회 노광합니다.</li>
+  <li><code>Include Base Image</code>: 기존 base image 위에 CAD 도형을 합쳐 output을 만듭니다.</li>
 </ul>
-</div>
-</div>
-</section>
-<!-- Section 11: Draw CAD -->
-<section class="mb-24 scroll-mt-24" id="draw-cad">
-<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
-<span class="material-symbols-outlined text-accent-blue">design_services</span> 11. Draw CAD
-    </h2>
-<div class="grid md:grid-cols-2 gap-8">
-<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
-<p class="text-on-surface mb-4">CAD 그리기 도구:</p>
-<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
-<li>기본 도형(선, 원, 사각형) 그리기</li>
-<li>레이어 관리</li>
-<li>좌표 기반 정밀 편집</li>
+<figure class="manual-figure"><img src="assets/img/23_draw_cad_output_controls.png" alt="CAD Output 관련 버튼 위치입니다. Save CAD, Load CAD, Export PNG, Apply, Expose Now, Include Base Image를 설명할 때 사용합니다." loading="lazy"><figcaption>CAD Output 관련 버튼 위치입니다. Save CAD, Load CAD, Export PNG, Apply, Expose Now, Include Base Image를 설명할 때 사용합니다.</figcaption></figure></div><div class="tab-panel" id="cad-output-tab-1" role="tabpanel"><ul>
+  <li><code>Draw at least one shape before output.</code>: 출력할 CAD 도형이 없습니다.</li>
+  <li><code>Save a lens scale profile before output.</code>: 현재 렌즈의 um/px scale profile 저장이 필요합니다.</li>
+  <li><code>MASKLESS LITHO Display is not set.</code>: DLP display 적용 후 다시 시도합니다.</li>
+  <li><code>A sequence is already running.</code>: sequence가 끝나거나 Stop된 뒤 Expose Now를 사용합니다.</li>
+</ul></div></div></div>
+        </section><section id="gds-import" class="manual-section">
+          <div class="section-kicker">13</div>
+          <div class="section-title-row"><h2>GDS Import</h2></div>
+          <p class="section-intro">GDS/GDS2 layout에서 layer/datatype을 선택해 DLP 해상도 PNG로 변환하고, 일반 이미지처럼 Pattern Settings에 로드합니다.</p>
+          <div class="tabs"><div class="tab-list" role="tablist"><button class="tab-button active" type="button" role="tab" aria-selected="true" data-tab-target="gds-import-tab-0">작업 순서</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="gds-import-tab-1">제약</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="gds-import-tab-2">메시지</button></div><div class="tab-panels"><div class="tab-panel active" id="gds-import-tab-0" role="tabpanel"><ol>
+  <li>현재 렌즈의 CAD scale profile을 저장합니다.</li>
+  <li><code>Setting &gt; Display</code>에서 <code>MASKLESS LITHO Display</code>가 설정되어 있는지 확인합니다.</li>
+  <li><code>Pattern Settings &gt; Load GDS</code>를 누릅니다.</li>
+  <li><code>.gds</code> 또는 <code>.gds2</code> 파일을 선택합니다.</li>
+  <li><code>Select GDS Layer</code> dialog에서 변환할 layer/datatype을 선택합니다.</li>
+  <li>프로그램이 DLP 해상도 PNG를 생성하고 Pattern Settings에 로드합니다.</li>
+  <li><code>Add</code>로 sequence에 넣고 일반 이미지처럼 <code>Start</code>로 노광합니다.</li>
+</ol>
+<figure class="manual-figure"><img src="assets/img/22_gds_layer_select_dialog.png" alt="GDS layer/datatype 선택 dialog입니다. 변환할 레이어를 고르는 단계에서 사용합니다." loading="lazy"><figcaption>GDS layer/datatype 선택 dialog입니다. 변환할 레이어를 고르는 단계에서 사용합니다.</figcaption></figure></div><div class="tab-panel" id="gds-import-tab-1" role="tabpanel"><ul>
+  <li>GDS 결과는 Draw CAD에서 편집 가능한 도형으로 가져오지 않습니다.</li>
+  <li>선택한 layer/datatype의 geometry가 DLP 영역 밖이면 visible pixel이 없을 수 있습니다.</li>
+  <li>GDS import 전 sequence 실행 중 또는 manual LED ON 상태이면 작업이 차단됩니다.</li>
+  <li>실제 장비에서는 TEST Mode가 꺼져 있는지, DLP monitor가 맞는지 확인해야 합니다.</li>
+</ul></div><div class="tab-panel" id="gds-import-tab-2" role="tabpanel"><div class="table-wrap"><table>
+  <thead><tr><th>메시지</th><th>의미</th><th>해결</th></tr></thead>
+  <tbody>
+    <tr><td><code>No renderable GDS layers were found.</code></td><td>변환 가능한 layer가 없음</td><td>GDS 구조와 cell/layer 확인</td></tr>
+    <tr><td><code>No renderable GDS geometry was found for the selected cell/layer.</code></td><td>선택한 layer/datatype에 geometry가 없음</td><td>다른 layer/datatype 선택</td></tr>
+    <tr><td><code>Selected GDS geometry is outside the DLP area...</code></td><td>scale/origin 문제</td><td>scale profile과 layout 위치 확인</td></tr>
+    <tr><td><code>Selected GDS geometry produced no visible pixels.</code></td><td>최종 PNG에 보이는 pixel 없음</td><td>scale, origin, layer 다시 확인</td></tr>
+  </tbody>
+</table></div></div></div></div>
+        </section><section id="expose-setup" class="manual-section">
+          <div class="section-kicker">14</div>
+          <div class="section-title-row"><h2>Expose Setup</h2></div>
+          <p class="section-intro">여러 패턴을 순서대로 노광하기 위한 sequence table입니다. Add로 현재 패턴을 넣고, 각 row의 시간/강도/반복 값을 편집합니다.</p>
+          <div class="tabs"><div class="tab-list" role="tablist"><button class="tab-button active" type="button" role="tab" aria-selected="true" data-tab-target="expose-setup-tab-0">버튼</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="expose-setup-tab-1">컬럼</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="expose-setup-tab-2">주의</button></div><div class="tab-panels"><div class="tab-panel active" id="expose-setup-tab-0" role="tabpanel"><ul>
+  <li><code>Add</code>: 현재 Pattern Settings 이미지를 sequence에 추가합니다.</li>
+  <li><code>Delete</code>: 선택 row를 삭제합니다.</li>
+  <li><code>Up</code>/<code>Down</code>: 선택 row 순서를 변경합니다.</li>
+  <li><code>Export</code>: Expose Setup table을 파일로 내보냅니다.</li>
+  <li><code>Start</code>: sequence를 시작합니다.</li>
+  <li><code>Next</code>: 정렬 대기 step 이후 다음 노광으로 진행합니다.</li>
+  <li><code>Stop</code>: 실행 중 sequence를 멈추고 DLP 출력을 black으로 되돌립니다.</li>
 </ul>
-</div>
-<img alt="Draw CAD Interface" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFS6gEm1DgiBioGftJMof2mus37YAC-Mpo3BaHhSN1HJMqWrgTq-p0DgJuAMfufR_Iif_a5LF539i3SJ4cDFfzovOj0Jqye4Ry_RVSXZY9lHsUpxnlCl-x30aeuQdJhliCgc-KiW7DK0Tp6XeRhIiuS2Zsj4bjLPV4vXwoV8_kX2LcA8Oy_RjAcZzSCqZKy6nanWCCxX5q1C6L9ZIBSPgf641mNO5FHV8iKUqM1mLLoLIX0w9fo4ttMJKKzs_YlnhxtVMEGiXkelI"/>
-</div>
-</section>
-<!-- Section 12: CAD Output -->
-<section class="mb-24 scroll-mt-24" id="cad-output">
-<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
-<span class="material-symbols-outlined text-accent-blue">output</span> 12. CAD Output
-    </h2>
-<div class="grid md:grid-cols-2 gap-8">
-<img alt="CAD Output Settings" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5SPb4SKQ-oxTkjGfY1N5NborQxwiO4VSWecjoy_S5AcMvURWOpK8Ee5gCFXwT_z7HE0gY7W7vDniVY7BIYU17ggh1drsP58BQl8LOBp5Fa0RvdY4Cwic9JYW-vZP7nnTLCctpswl1JVqq6RDoCeO2oL1wn1Vrl08uxoNJy08YtdD0j9B6eKURpyHKQDAleSt0pSglJwCnvyQCLmI1ZVDUHrAi4s8gQoy7HmtOJNr0dmWpU-40XmfmXeEqCt6KzESy5l07wlVQ6w0"/>
-<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
-<p class="text-on-surface mb-4">출력 설정:</p>
-<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
-<li>파일 형식 변환</li>
-<li>해상도 설정</li>
-<li>배치 출력 지원</li>
+<figure class="manual-figure"><img src="assets/img/06_expose_setup_panel.png" alt="Expose Setup 패널입니다. Add/Delete/Up/Down/Export와 Start/Next/Stop 위치를 보여줍니다." loading="lazy"><figcaption>Expose Setup 패널입니다. Add/Delete/Up/Down/Export와 Start/Next/Stop 위치를 보여줍니다.</figcaption></figure></div><div class="tab-panel" id="expose-setup-tab-1" role="tabpanel"><ul>
+  <li><code>File</code>: 노광할 이미지 또는 변환된 CAD/GDS PNG입니다.</li>
+  <li><code>Exposure (ms)</code>: 노광 시간입니다.</li>
+  <li><code>Rotation (deg)</code>: row별 회전값입니다.</li>
+  <li><code>Intensity (%)</code>: 기본 intensity 단위입니다.</li>
+  <li><code>Intensity (mW/cm<sup>2</sup>)</code>: Calibration LUT ON 상태에서 lens 기준으로 변환된 단위입니다.</li>
+  <li><code>Rest (ms)</code>: row 사이 대기 시간입니다.</li>
+  <li><code>Repeat</code>: 반복 횟수입니다.</li>
+</ul></div><div class="tab-panel" id="expose-setup-tab-2" role="tabpanel"><ul>
+  <li>실행 중에는 setup이 lock되어 임의 수정이 제한됩니다.</li>
+  <li><code>Expose Setup has no valid image steps to run.</code> 메시지가 나오면 Add로 유효한 패턴 row를 먼저 추가합니다.</li>
+  <li><code>MASKLESS LITHO Display is not set.</code> 메시지가 나오면 Setting > Display를 먼저 적용합니다.</li>
+  <li>긴 sequence는 Export로 조건을 보관한 뒤 실행하면 재현성이 좋아집니다.</li>
+</ul></div></div></div>
+        </section><section id="calibration-lut" class="manual-section">
+          <div class="section-kicker">15</div>
+          <div class="section-title-row"><h2>Calibration LUT</h2></div>
+          <p class="section-intro">렌즈별 LUT를 불러와 사용자가 입력한 intensity를 실제 광량 단위로 변환해 sequence와 Pattern Settings에 반영합니다.</p>
+          <div class="tabs"><div class="tab-list" role="tablist"><button class="tab-button active" type="button" role="tab" aria-selected="true" data-tab-target="calibration-lut-tab-0">사용법</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="calibration-lut-tab-1">주의</button></div><div class="tab-panels"><div class="tab-panel active" id="calibration-lut-tab-0" role="tabpanel"><ol>
+  <li><code>Setting &gt; Expose</code>를 엽니다.</li>
+  <li><code>Calibration</code> checkbox를 켭니다.</li>
+  <li><code>Load</code>로 LUT file을 불러옵니다.</li>
+  <li>Pattern Settings에 lens dropdown이 표시되면 사용할 lens를 선택합니다.</li>
+  <li>Intensity 입력과 Expose Setup table이 lens 기준 <code>mW/cm<sup>2</sup></code> 변환 흐름으로 동작하는지 확인합니다.</li>
+</ol>
+<figure class="manual-figure"><img src="assets/img/11_setting_expose_lut_comp_test.png" alt="Setting > Expose 탭의 Calibration, Compensation, TEST Mode 영역입니다." loading="lazy"><figcaption>Setting > Expose 탭의 Calibration, Compensation, TEST Mode 영역입니다.</figcaption></figure></div><div class="tab-panel" id="calibration-lut-tab-1" role="tabpanel"><ul>
+  <li>LUT와 lens 선택이 맞지 않으면 같은 % 값이라도 실제 광량이 달라질 수 있습니다.</li>
+  <li>Calibration을 끄면 intensity 표기는 다시 % 기준으로 돌아갑니다.</li>
+  <li>LUT load 실패 시 파일 형식과 경로를 확인하고, 로그의 <code>Calibration data load failed</code> 메시지를 확인합니다.</li>
+</ul></div></div></div>
+        </section><section id="compensation" class="manual-section">
+          <div class="section-kicker">16</div>
+          <div class="section-title-row"><h2>Compensation</h2></div>
+          <p class="section-intro">Compensation mask를 불러와 DLP 출력에 보정 이미지를 적용하는 기능입니다. UV Keystone과는 목적이 다른 출력 보정입니다.</p>
+          <div class="tabs"><div class="tab-list" role="tablist"><button class="tab-button active" type="button" role="tab" aria-selected="true" data-tab-target="compensation-tab-0">사용법</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="compensation-tab-1">구분</button></div><div class="tab-panels"><div class="tab-panel active" id="compensation-tab-0" role="tabpanel"><ol>
+  <li><code>Setting &gt; Expose</code>를 엽니다.</li>
+  <li><code>Compensation</code> checkbox를 켭니다.</li>
+  <li><code>Load</code>로 <code>.mask</code> compensation image를 불러옵니다.</li>
+  <li>보정 적용 여부를 출력 전 다시 확인합니다.</li>
+</ol>
+<figure class="manual-figure"><img src="assets/img/11_setting_expose_lut_comp_test.png" alt="Compensation checkbox와 Load 버튼은 Setting > Expose 탭에 있습니다." loading="lazy"><figcaption>Compensation checkbox와 Load 버튼은 Setting > Expose 탭에 있습니다.</figcaption></figure></div><div class="tab-panel" id="compensation-tab-1" role="tabpanel"><ul>
+  <li><code>Calibration LUT</code>: 입력 intensity와 실제 광량의 관계를 lens별로 변환합니다.</li>
+  <li><code>Compensation</code>: 출력 이미지에 보정 mask를 적용합니다.</li>
+  <li><code>UV Keystone</code>: DLP 출력의 위치 왜곡을 역보정합니다.</li>
+</ul></div></div></div>
+        </section><section id="settings" class="manual-section">
+          <div class="section-kicker">17</div>
+          <div class="section-title-row"><h2>Settings</h2></div>
+          <p class="section-intro">장비 제어, DLP display, Align View, 노광 보정, TEST Mode를 탭별로 관리하는 설정 창입니다.</p>
+          <div class="tabs"><div class="tab-list" role="tablist"><button class="tab-button active" type="button" role="tab" aria-selected="true" data-tab-target="settings-tab-0">General</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="settings-tab-1">Display</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="settings-tab-2">Align View</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="settings-tab-3">Expose/Help</button></div><div class="tab-panels"><div class="tab-panel active" id="settings-tab-0" role="tabpanel"><ul>
+  <li><code>Use Legacy PDC05</code>: 구버전 PDC05 controller를 사용할 때만 켭니다.</li>
+  <li><code>Power ON/OFF</code>: DLP controller 전원 제어입니다.</li>
+  <li><code>Fan ON/OFF</code>: DLP fan 제어입니다.</li>
+  <li>Theme 관련 버튼으로 UI 표시 테마를 바꿀 수 있습니다.</li>
 </ul>
-</div>
-</div>
-</section>
-<!-- Section 13: GDS Import -->
-<section class="mb-24 scroll-mt-24" id="gds-import">
-<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
-<span class="material-symbols-outlined text-accent-blue">file_upload</span> 13. GDS Import
-    </h2>
-<div class="grid md:grid-cols-2 gap-8">
-<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
-<p class="text-on-surface mb-4">GDS 파일 불러오기:</p>
-<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
-<li>GDSII 표준 지원</li>
-<li>레이어 선택적 로드</li>
-<li>대용량 파일 최적화</li>
+<figure class="manual-figure"><img src="assets/img/08_setting_general.png" alt="Setting > General 탭입니다. Legacy PDC05, Power, Fan 관련 항목을 설명합니다." loading="lazy"><figcaption>Setting > General 탭입니다. Legacy PDC05, Power, Fan 관련 항목을 설명합니다.</figcaption></figure></div><div class="tab-panel" id="settings-tab-1" role="tabpanel"><ul>
+  <li><code>Connected Monitor List</code>: 연결된 display 목록입니다.</li>
+  <li><code>Apply</code>: 선택 display를 <code>MASKLESS LITHO Display</code>로 적용합니다.</li>
+  <li><code>Current display</code>: 현재 적용된 출력 대상입니다.</li>
+  <li>GPU 표시를 함께 확인해 잘못된 모니터 선택을 줄입니다.</li>
 </ul>
-</div>
-<img alt="GDS Import Tool" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjzK3jF-o2ZyRkKjwT9S0BvohKcQ__65x-S53LObyA2A0R1SuBGPyQAdWIK1HYImlqsLyqoH7LG2WZcXEcaRjtFwYPulOlupOGLjNOtxGgFLg-z8NtUowzBProXiD_zSCN-qovcyK78ZogY-6188kUvGZbynihbCuEnpQBfj7VbRoBrUoERDzuQXS6o71eBJwZf3xZaZ7mSwZ76Inwj-T8F3KeaQPmMyQZGp_oRmiaRzfF_NCSBibmfrQ974rTyzJ6JOn0h6Lccbk"/>
-</div>
-</section>
-<!-- Section 14: Expose Setup -->
-<section class="mb-24 scroll-mt-24" id="expose-setup">
-<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
-<span class="material-symbols-outlined text-accent-blue">exposure</span> 14. Expose Setup
-    </h2>
-<div class="grid md:grid-cols-2 gap-8">
-<img alt="Expose Setup Panel" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKEtrIl9bBx319s_ZB-nF6To3qDBn2eEosHBzgM9Fa-eOH_0L6POJ8Y7Fnrz0621JhdhnTwbAHMVD_xC8IhCaVtKy9RuRm6pLz6v421layDgytHlPe78izvMIJxiYv_oycJ96Nd8nbu7BEAws0-kUkR9o802emJjBkuvaSRa74H15EHRRgZHSdYr6rttJVeEDpZ7GFcGHXm4LJXouBYvWY6klLTu_O1lD-XwoRi0HUFych3NKHO2orFCNfSuXDeB6MSA_KLraS1yE"/>
-<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
-<p class="text-on-surface mb-4">노광 설정:</p>
-<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
-<li>노광 시간(Exposure Time)</li>
-<li>대기 시간(Rest Time)</li>
-<li>반복 횟수 설정</li>
+<figure class="manual-figure"><img src="assets/img/09_setting_display.png" alt="Setting > Display 탭입니다. DLP display를 선택하고 Apply로 고정합니다." loading="lazy"><figcaption>Setting > Display 탭입니다. DLP display를 선택하고 Apply로 고정합니다.</figcaption></figure></div><div class="tab-panel" id="settings-tab-2" role="tabpanel"><ul>
+  <li><code>Rotation Angle</code>: Align View 회전값입니다.</li>
+  <li><code>Reset Align</code>: Align View 위치/크기/회전을 초기화합니다.</li>
+  <li><code>Align Wizard</code>: 1/2/4 Point Align과 UV Keystone Calibration 진입점입니다.</li>
+  <li><code>UV Keystone</code> status: profile ON/OFF와 profile 정보를 보여줍니다.</li>
+  <li><code>Disable UV Keystone</code>: profile은 유지하고 보정만 끕니다.</li>
+  <li><code>Clear UV Keystone</code>: 활성 profile을 해제합니다.</li>
 </ul>
-</div>
-</div>
-</section>
-<!-- Section 15: Calibration LUT -->
-<section class="mb-24 scroll-mt-24" id="calibration-lut">
-<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
-<span class="material-symbols-outlined text-accent-blue">tune</span> 15. Calibration LUT
-    </h2>
-<div class="grid md:grid-cols-2 gap-8">
-<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
-<p class="text-on-surface mb-4">LUT 보정:</p>
-<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
-<li>밝기 선형성 보정</li>
-<li>그레이스케일 매핑</li>
-<li>센서 데이터 기반 자동 생성</li>
+<figure class="manual-figure"><img src="assets/img/10_setting_align_view_uv_keystone.png" alt="Setting > Align View 탭입니다. Align Wizard와 UV Keystone 상태 확인에 사용합니다." loading="lazy"><figcaption>Setting > Align View 탭입니다. Align Wizard와 UV Keystone 상태 확인에 사용합니다.</figcaption></figure></div><div class="tab-panel" id="settings-tab-3" role="tabpanel"><ul>
+  <li><code>Anti-vibration</code>: 노광 안정화를 위한 지연/보조 설정입니다.</li>
+  <li><code>Calibration</code> + <code>Load</code>: LUT 기반 intensity 변환입니다.</li>
+  <li><code>Compensation</code> + <code>Load</code>: compensation mask 적용입니다.</li>
+  <li><code>TEST Mode</code>: 장비 없이 UI flow를 확인합니다.</li>
+  <li><code>Help</code> 탭은 도움말 진입점입니다.</li>
 </ul>
-</div>
-<img alt="Calibration LUT Tool" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVZaorrHydstq7C271VFJCcr3lNCZMVwpuRy5ziJj8m8VWyJiOlOMXN7u3RrdZbXcWnOVRdTxV1UwmbQcK3z5HMYNKv05rJxYqrh5yyxqxHndTe379s9Ezo77HxzZ4GnIhEco_XkD5qNg9U5KPHwnw2a20xte6GyP3jZtkRWDArVQpGtLDqxfRAWGG8dfUNgNVXWuiOfGWYrT08h5VVcwY4b6N2ibINoLeOWLoTx6dKZ3oKxQij9N3WdOrZRKfQD3f3w_5wonwQQM"/>
-</div>
-</section>
-<!-- Section 16: Compensation -->
-<section class="mb-24 scroll-mt-24" id="compensation">
-<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
-<span class="material-symbols-outlined text-accent-blue">transform</span> 16. Compensation
-    </h2>
-<div class="grid md:grid-cols-2 gap-8">
-<img alt="Compensation Settings" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwOzIe8SPnAOmFsUO9BKje-FEgJ4PWWwPsp5sN0jjFZ5pzPrrjy1qdnZc1CJMuYpvsBOQTXBrGRw67SoPDTGgGqQL20GI5UD5tCNcCqsxGbVEYn4bknPmiv1ht31EbCE1t75Tm_HEvEC-TA2TVJ4h58vigxFMI0f5P2wJ3F5UiuYBDK99u8b9n6Ak-Yhn-SFy7wZmeuXe0y7r-SzDxXB2XfOxj7QnyygBwhSFXS-wDv2snAIEbXjirUNrK5ky75E25dT2YZBxNk8U"/>
-<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
-<p class="text-on-surface mb-4">보정 기능:</p>
-<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
-<li>열 팽창 보정</li>
-<li>스테이지 비선형성 보정</li>
-<li>환경 변수 입력</li>
+<figure class="manual-figure"><img src="assets/img/11_setting_expose_lut_comp_test.png" alt="Setting > Expose 탭입니다. Calibration LUT, Compensation, TEST Mode 설명에 사용합니다." loading="lazy"><figcaption>Setting > Expose 탭입니다. Calibration LUT, Compensation, TEST Mode 설명에 사용합니다.</figcaption></figure></div></div></div>
+        </section><section id="legacy-dlp" class="manual-section">
+          <div class="section-kicker">18</div>
+          <div class="section-title-row"><h2>Legacy DLP</h2></div>
+          <p class="section-intro">구버전 PDC05 DLP controller를 사용할 때만 켜는 호환 모드입니다. 일반적으로는 modern mode를 유지합니다.</p>
+          <ul>
+  <li>위치: <code>Setting &gt; General &gt; Use Legacy PDC05</code></li>
+  <li>기본값은 modern DLP controller mode입니다.</li>
+  <li>Legacy mode는 구버전 DLL과 controller 환경에서만 사용합니다.</li>
+  <li>노광 중 DLP mode를 바꾸면 안 됩니다. 먼저 <code>Stop</code>으로 출력 상태를 정리합니다.</li>
+  <li>controller 종류가 확실하지 않으면 modern mode로 먼저 확인합니다.</li>
 </ul>
-</div>
-</div>
-</section>
-<!-- Section 17: Setting -->
-<section class="mb-24 scroll-mt-24" id="settings">
-<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
-<span class="material-symbols-outlined text-accent-blue">settings</span> 17. Setting
-    </h2>
-<div class="grid md:grid-cols-2 gap-8">
-<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
-<p class="text-on-surface mb-4">시스템 설정:</p>
-<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
-<li>통신 포트(COM Port) 설정</li>
-<li>언어 선택</li>
-<li>사용자 권한 관리</li>
+<figure class="manual-figure"><img src="assets/img/08_setting_general.png" alt="Use Legacy PDC05 checkbox는 General 탭에 있습니다." loading="lazy"><figcaption>Use Legacy PDC05 checkbox는 General 탭에 있습니다.</figcaption></figure>
+        </section><section id="test-mode" class="manual-section">
+          <div class="section-kicker">19</div>
+          <div class="section-title-row"><h2>TEST Mode</h2></div>
+          <p class="section-intro">장비 없이 UI flow를 검증하기 위한 모드입니다. 실제 노광 전에는 TEST Mode 상태가 의도와 맞는지 반드시 확인해야 합니다.</p>
+          <div class="tabs"><div class="tab-list" role="tablist"><button class="tab-button active" type="button" role="tab" aria-selected="true" data-tab-target="test-mode-tab-0">장비 없는 테스트</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="test-mode-tab-1">주의</button></div><div class="tab-panels"><div class="tab-panel active" id="test-mode-tab-0" role="tabpanel"><ol>
+  <li><code>Setting</code>을 엽니다.</li>
+  <li><code>Expose</code> 탭으로 이동합니다.</li>
+  <li><code>TEST Mode</code>를 켭니다.</li>
+  <li>이미지 로드, Align View, Draw CAD, Expose Setup 흐름을 확인합니다.</li>
+  <li>실제 노광 전에는 TEST Mode를 원하는 상태로 다시 맞춥니다.</li>
+</ol>
+<figure class="manual-figure"><img src="assets/img/11_setting_expose_lut_comp_test.png" alt="TEST Mode checkbox는 Setting > Expose 탭 아래쪽에 있습니다." loading="lazy"><figcaption>TEST Mode checkbox는 Setting > Expose 탭 아래쪽에 있습니다.</figcaption></figure></div><div class="tab-panel" id="test-mode-tab-1" role="tabpanel"><ul>
+  <li>TEST Mode는 장비 제어를 생략하거나 안전하게 우회해 UI flow를 확인하기 위한 용도입니다.</li>
+  <li>실제 장비에서 노광이 되지 않는다면 TEST Mode가 켜져 있는지 먼저 확인합니다.</li>
+  <li>반대로 장비 없는 PC에서 오류 없이 메뉴얼 캡쳐를 만들 때는 TEST Mode가 유용합니다.</li>
+</ul></div></div></div>
+        </section><section id="data-paths" class="manual-section">
+          <div class="section-kicker">20</div>
+          <div class="section-title-row"><h2>Data Paths</h2></div>
+          <p class="section-intro">설정, 로그, CAD output, UV Keystone profile, compensation mask가 저장되는 위치입니다.</p>
+          <div class="table-wrap"><table>
+  <thead><tr><th>항목</th><th>위치</th><th>설명</th></tr></thead>
+  <tbody>
+    <tr><td>Config</td><td><code>%USERPROFILE%\.maskless_v2\config\config.json</code></td><td>Display, LUT, CAD scale, UV Keystone 활성 상태 등 main window 설정</td></tr>
+    <tr><td>LUT copy</td><td><code>%USERPROFILE%\.maskless_v2\config\lut.dat</code></td><td>Calibration LUT load 후 보관되는 기본 경로</td></tr>
+    <tr><td>Compensation</td><td><code>%USERPROFILE%\.maskless_v2\config\compensation.mask</code></td><td>Load한 compensation image copy</td></tr>
+    <tr><td>Info log</td><td><code>%USERPROFILE%\.maskless_v2\logs\app_info.log</code></td><td>일반 동작 로그</td></tr>
+    <tr><td>Error log</td><td><code>%USERPROFILE%\.maskless_v2\logs\app_error.log</code></td><td>예외와 오류 로그</td></tr>
+    <tr><td>CAD output</td><td><code>%USERPROFILE%\.maskless_v2\cad\</code></td><td>자동 생성되는 CAD PNG와 .maskcad 기본 output 위치</td></tr>
+    <tr><td>UV Keystone</td><td><code>%USERPROFILE%\.maskless_v2\keystone\*.maskkeystone</code></td><td>17점 UV Keystone profile 저장 위치</td></tr>
+    <tr><td>User assets</td><td><code>%USERPROFILE%\.maskless_v2\assets\</code></td><td>사용자 asset copy/cache 위치</td></tr>
+  </tbody>
+</table></div>
+        </section><section id="troubleshooting" class="manual-section">
+          <div class="section-kicker">21</div>
+          <div class="section-title-row"><h2>Troubleshooting</h2></div>
+          <p class="section-intro">문제가 생기면 먼저 Stop, DLP black output, TEST Mode, display 선택, 현재 실행 상태를 확인합니다.</p>
+          <div class="table-wrap"><table>
+  <thead><tr><th>증상</th><th>가능한 원인</th><th>해결</th></tr></thead>
+  <tbody>
+    <tr><td>DLP에 아무것도 나오지 않음</td><td>Display 선택 오류, TEST Mode 상태, 장비 미연결</td><td><code>Setting &gt; Display</code>에서 DLP monitor 선택 후 Apply, TEST Mode 확인</td></tr>
+    <tr><td>작업자 모니터에 전체 화면 패턴이 뜸</td><td>DLP display 대신 일반 monitor 선택</td><td>즉시 Stop 후 Display 탭에서 monitor 재선택</td></tr>
+    <tr><td><code>Start</code>가 실행되지 않음</td><td>valid image step 없음</td><td>Pattern Settings에서 이미지/GDS/CAD 결과를 로드하고 Add 실행</td></tr>
+    <tr><td>Motorized Focus가 열리지 않음</td><td>sequence, CAD Expose, manual LED ON 중</td><td>Stop 또는 LED OFF 후 다시 실행</td></tr>
+    <tr><td>Draw CAD가 열리지 않음</td><td>이미지 미로드, display 미설정, Align View 미표시</td><td>Load image, Setting > Display Apply, Align Viewer > Show 순서 확인</td></tr>
+    <tr><td>CAD output 실패</td><td>도형 없음 또는 lens scale profile 없음</td><td>도형 작성 후 Save Scale 실행</td></tr>
+    <tr><td>GDS import 결과가 비어 있음</td><td>layer/datatype 선택 오류, scale/origin 오류</td><td>Select GDS Layer에서 다른 layer 선택, scale profile 확인</td></tr>
+    <tr><td>UV Keystone이 적용되지 않음</td><td>profile OFF, Disable 상태, display 해상도 불일치</td><td>Setting > Align View status 확인, 필요하면 재보정</td></tr>
+    <tr><td>Intensity 단위가 예상과 다름</td><td>Calibration LUT ON/OFF 상태 변경</td><td>Setting > Expose Calibration checkbox와 lens 선택 확인</td></tr>
+  </tbody>
+</table></div>
+<div class="callout warn"><strong>로그 확인:</strong> 반복되는 오류는 <code>%USERPROFILE%\.maskless_v2\logs\app_info.log</code>, <code>app_error.log</code>를 함께 확인하세요.</div>
+        </section><section id="release-notes" class="manual-section">
+          <div class="section-kicker">22</div>
+          <div class="section-title-row"><h2>Release Notes v2.0.9</h2></div>
+          <p class="section-intro">이 메뉴얼에 반영한 v2.0.9 주요 변경사항입니다.</p>
+          <ul>
+  <li><code>Initialize</code> 아래 <code>Motorized Focus</code> 런처 버튼 추가</li>
+  <li>Motorized Focus를 <code>maskless_v2_0_9.exe --motorized-focus</code> 내부 모드로 포함</li>
+  <li><code>dist/maskless_v2_0_9.zip</code>을 단일 exe 구성으로 정리</li>
+  <li>Sequence, CAD Expose, manual LED ON 중 Focus 실행 차단</li>
+  <li><code>UV Keystone Calibration</code>의 Align View 의존성 제거</li>
+  <li>17개 raw DLP point를 각 4회 클릭해 <code>.maskkeystone</code> profile 생성</li>
+  <li>활성 UV Keystone profile을 Load image, CAD, GDS, Sequence, Expose Now, manual LED ON 출력 직전에 적용</li>
+  <li><code>Setting &gt; Align View</code>에 UV Keystone status, Disable, Clear controls 추가</li>
+  <li>Draw CAD boundary/draft/preview/measure guide를 실선으로 개선</li>
+  <li>Draw CAD <code>W um</code>, <code>H um</code>, <code>Stroke um</code> 입력을 현재 um/px 기준 pixel 배수로 snap</li>
+  <li><code>Load GDS</code>를 일반 실행 파일에서 기본 표시</li>
+  <li>GDS는 editable CAD shape가 아니라 DLP PNG로 변환되는 흐름으로 정리</li>
 </ul>
-</div>
-<img alt="System Settings" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRCC2t2iK60-JwmEZ2_SbJZO6p5z-hxMERLj0H5OfpU3-jQLD7DwmKuBpP0qAZOWz_REpatCv-2lVBY19lhznog_rYCdxZoFc3EiBDLgn8NB9wtafVxNUK7yNRtGOIryYi6n9SqXCblkpolxSJ0b9AqyIUReBCP89_HAOdPwCa247Aj6O8cuDQRMibaf916xJqBhrXz2_NUth6cQC-NJzLTnnbuRKH7paNUWe5aFk459VwuPTeOlZoYGOAQ5xiD8wya00UzqN5Ugo"/>
-</div>
-</section>
-<!-- Section 18: Legacy DLP -->
-<section class="mb-24 scroll-mt-24" id="legacy-dlp">
-<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
-<span class="material-symbols-outlined text-accent-blue">history</span> 18. Legacy DLP
-    </h2>
-<div class="grid md:grid-cols-2 gap-8">
-<img alt="Legacy DLP Support" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIK_YdNr8kSw6DGcifNpF8zYUpaXvjS8UfUR8sOmEKcWJ05coo9QBs3_jB6SujtSxmvy_pGpEnFZZGHFslkdHJWRySDzEWkOjlXRtfAOU67ZVFMejCxHBvwvaVOqq6sR_QpT9i5dGS3P3vYbxZXGgnNaB-PGYCx7e_KBvouoc-UtbulfSDT0w5OkaF9iL5myP_ApS3V0DhClLT88Ak8sR5dqt0a_Bv0AUu6ws6D-pk2QuPgnCSdF10C2Nwrevf7ByoGL8AsKyKtx8"/>
-<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
-<p class="text-on-surface mb-4">레거시 장비 지원:</p>
-<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
-<li>구형 DLP 컨트롤러 호환 모드</li>
-<li>하위 호환성 설정</li>
-<li>레거시 프로토콜 지원</li>
-</ul>
-</div>
-</div>
-</section>
-<!-- Section 19: TEST Mode -->
-<section class="mb-24 scroll-mt-24" id="test-mode">
-<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
-<span class="material-symbols-outlined text-accent-blue">science</span> 19. TEST Mode
-    </h2>
-<div class="grid md:grid-cols-2 gap-8">
-<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
-<p class="text-on-surface mb-4">테스트 모드:</p>
-<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
-<li>가상 장비 시뮬레이션</li>
-<li>디버그 로그 확인</li>
-<li>하드웨어 없이 기능 테스트</li>
-</ul>
-</div>
-<img alt="Test Mode Interface" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqOMLUjMhAxlq-ZH2mrMEGdIdLaTnLn5m0b3KnOgv-dSTT7erDuzojNcrS3fGdcgZ6xnnJVhAQgcXyJatIQiymNAX0sMYSb9bRL3NQrhmxXyJVdFTVk7oDTxH1_He0ngKjc2rSKmnBalMNf9C1mIsJ3WIMOa6eHarWI_u9aEjbWGS2xtr2H5-hwXHCVYldeavLnTYivHe1HJeNi_eSDCyCPSmnvequJML4z5vWTAsERpwEeWBIJeEeqJ_Dm755OfRbkk0O9Flob3M"/>
-</div>
-</section>
-<!-- Section 20: Data Paths -->
-<section class="mb-24 scroll-mt-24" id="data-paths">
-<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
-<span class="material-symbols-outlined text-accent-blue">folder</span> 20. Data Paths
-    </h2>
-<div class="grid md:grid-cols-2 gap-8">
-<img alt="Data Paths Configuration" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0FUeq1WpdHWFablxdJ_388WrbbeUPHdLomDmrJ-LqOMoFiGYSGBLiTnprKViM46-zL2p2dnKM1vJZbE1v5Ui4UpyO7NDE4vhNrG5ZdgrEs2-OSTayuLV-5BmHFzM_nft4HaW7GUXEb6B9gyETjJWQrvTTX45ZBqe8eyZe6icE9Xv7TKzYWJsQKntnCFvJ74aAQ3dsBsle0DVpxW0XHF89BHtt9dNj0UAxrk-iDBtoiGBPM6mPY__JLBGoPSGKD8lNHlz4YwKMXqA"/>
-<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
-<p class="text-on-surface mb-4">데이터 경로 설정:</p>
-<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
-<li>로그 저장 경로</li>
-<li>패턴 라이브러리 경로</li>
-<li>백업 폴더 설정</li>
-</ul>
-</div>
-</div>
-</section>
-<!-- Section 21: Troubleshooting -->
-<section class="mb-24 scroll-mt-24" id="troubleshooting">
-<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
-<span class="material-symbols-outlined text-accent-blue">build</span> 21. Troubleshooting
-    </h2>
-<div class="grid md:grid-cols-2 gap-8">
-<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
-<p class="text-on-surface mb-4">문제 해결 가이드:</p>
-<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
-<li>연결 오류 해결 방법</li>
-<li>이미지 왜곡 현상 조치</li>
-<li>소프트웨어 충돌 시 대처</li>
-</ul>
-</div>
-<img alt="Troubleshooting Guide" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgab-smY1Knp94RvW-keJ1jbCVzGivd5Ot1wdhzc1r4s9bgM_kPARfV2wHfTa_OSaFU4pcX3a9D3-TmooUzHI-s_qIuHrx5PuBtYpWWXZgDjXLTEMDn9aoerqfRVqt1mSlhGJhhMgc65C_50ut2cnjt8EYdR8C-YUKZk-GtNpdAATRTbRvP8SJz1t2H1sjHsJA2Kq8ffu8vK_t6p2fVD1cbwAot4X5O88dsxNT7jRNtmgllblCKSBH_VFIViATrDiAEzoCAJyT2gA"/>
-</div>
-</section>
-<!-- Section 22: Release Notes -->
-<section class="mb-24 scroll-mt-24" id="release-notes">
-<h2 class="font-headline-lg text-headline-lg text-white mb-8 flex items-center gap-3">
-<span class="material-symbols-outlined text-accent-blue">new_releases</span> 22. Release Notes
-    </h2>
-<div class="grid md:grid-cols-2 gap-8">
-<img alt="Release Notes" class="w-full h-auto rounded border border-outline/30" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpkuv8pA-hNhCCoyWI_gvdDeFYxq0x5bRdWAU2P6P8GEfXpl06AcOXCxyNesHqwNVoweyt2b39FziPKb_AEpBUZo_-wmN34patWBe5pmddppVycZxTj4ocfa_0wDNSbpGPsRw7tvr6yXLzUU804xNWnvbvwTmHDy0VxtLHiyXD71CdqZgwuwM1gvAuLxiyaJdBSBFSHSUtITZLuv9GRartfIFoJwupL3zzg8bQmxdeY4iDjxy2-wgEP4y-qJFwaR3nGCaRb0C69vA"/>
-<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
-<p class="text-on-surface mb-4">v2.0.9 업데이트 내역:</p>
-<ul class="list-disc list-inside space-y-2 text-on-surface-variant">
-<li>GDS 로드 속도 개선</li>
-<li>UI 다크 모드 최적화</li>
-<li>버그 수정 및 안정성 향상</li>
-</ul>
-</div>
-</div>
-</section>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const tabs = document.querySelectorAll('.tab-btn');
-        
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const section = tab.closest('section');
-                if (!section) return;
-                
-                const targetId = tab.getAttribute('data-tab');
-                const sectionId = section.id;
-                
-                // Update Buttons in this section only
-                section.querySelectorAll('.tab-btn').forEach(btn => {
-                    btn.classList.remove('border-accent-blue', 'text-white', 'font-bold');
-                    btn.classList.add('border-transparent', 'text-text-muted');
-                });
-                
-                // Activate clicked button
-                tab.classList.remove('border-transparent', 'text-text-muted');
-                tab.classList.add('border-accent-blue', 'text-white', 'font-bold');
-                
-                // Hide all tab contents in this section
-                section.querySelectorAll('.tab-content').forEach(content => {
-                    content.classList.add('hidden');
-                    content.classList.remove('active');
-                });
-                
-                // Show target content
-                const targetContent = document.getElementById(`${sectionId}-${targetId}`);
-                if (targetContent) {
-                    targetContent.classList.remove('hidden');
-                    targetContent.classList.add('active');
-                }
-            });
-        });
+        </section>
+            </main>
+          </div>
+          <script>
+const navLinks = [...document.querySelectorAll('.nav a')];
+const sections = [...document.querySelectorAll('section[id]')];
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id));
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+sections.forEach(section => observer.observe(section));
+
+document.querySelectorAll('.tabs').forEach(tabs => {
+  const buttons = [...tabs.querySelectorAll('.tab-button')];
+  const panels = [...tabs.querySelectorAll('.tab-panel')];
+  buttons.forEach((button, index) => {
+    button.addEventListener('click', () => {
+      buttons.forEach((item, itemIndex) => {
+        const isActive = itemIndex === index;
+        item.classList.toggle('active', isActive);
+        item.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+      panels.forEach((panel, panelIndex) => panel.classList.toggle('active', panelIndex === index));
     });
-</script></main>
-</div>
-<!-- Footer -->
-<footer class="bg-surface-container-low dark:bg-surface-container-lowest border-t border-outline-variant dark:border-outline py-8 px-4 mt-auto">
-<div class="max-w-container-max mx-auto flex flex-col items-center justify-center gap-4 text-body-sm text-secondary text-center">
-<div class="font-label-caps text-label-caps tracking-widest text-primary">PLANCK INC.</div>
-<p class="">© 2024 PLANCK INC. All rights reserved.</p>
-</div>
-</footer>
-<script>
-        // Active Nav State Logic
-        const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('.nav-link');
+  });
+});
 
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (scrollY >= sectionTop - 100) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('border-primary', 'bg-primary-container/10', 'text-primary', 'font-bold');
-                link.classList.add('border-transparent', 'text-on-surface-variant');
-                
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.remove('border-transparent', 'text-on-surface-variant');
-                    link.classList.add('border-primary', 'bg-primary-container/10', 'text-primary', 'font-bold');
-                }
-            });
-        });
-    </script>
-</body></html>
+document.getElementById('mobileSelect')?.addEventListener('change', event => {
+  location.hash = event.target.value;
+});
+</script>
+        </body>
+        </html>
