@@ -81,7 +81,7 @@ tr:last-child td { border-bottom:0; }
       <span>Single EXE Focus Mode</span>
     </div>
     <h1>이 메뉴얼만 보고도 노광 흐름을 따라갈 수 있게 정리했습니다.</h1>
-    <p>v2.1은 v2.0.10 계열의 GDS Import, UV Keystone, Motorized Focus, manual LED 안정화 패치를 묶은 안정 릴리즈입니다. <code>LED ON</code>은 UV Keystone이 <code>APPLIED (ON)</code> 상태이면 보정 이미지를 먼저 적용하고, 보정이 꺼져 있거나 profile이 없으면 raw 이미지로 DLP를 켭니다.</p>
+    <p>v2.1은 GDS Import, UV Keystone, Motorized Focus, manual LED 안정화 개선이 반영된 안정 릴리즈입니다. <code>LED ON</code>은 UV Keystone이 <code>APPLIED (ON)</code> 상태이면 보정 이미지를 먼저 적용하고, 보정이 꺼져 있거나 profile이 없으면 raw 이미지로 DLP를 켭니다.</p>
     <div class="hero-actions"><a href="#quick-start">빠른 시작</a><a class="secondary-action" href="#release-notes">변경사항</a></div>
     <div class="callout"><strong>기준:</strong> 현재 worktree의 <code>README.md</code>, <code>ui/main_window.py</code>, <code>ui/setting_window.py</code>, <code>ui/gds_layer_dialog.py</code>와 실제 v2.1 UI 캡쳐를 기준으로 작성했습니다.</div>
   </div>
@@ -150,7 +150,7 @@ dist\maskless_v2_1.exe</code></pre>
     <tr><td><code>Expose Setup</code></td><td>노광 sequence row 추가/편집/실행</td><td>Calibration ON/OFF에 따라 intensity 단위가 달라짐</td></tr>
   </tbody>
 </table></div>
-<figure class="manual-figure" style="--figure-width:750px"><img src="assets/img/main-window-v2_1.png" alt="메인 화면 전체입니다. 최신 reference 캡쳐로, 이전 v2.0.9 화면 대신 이 이미지를 사용합니다." loading="lazy"><figcaption>메인 화면 전체입니다. 최신 reference 캡쳐로, 이전 v2.0.9 화면 대신 이 이미지를 사용합니다.</figcaption></figure>
+<figure class="manual-figure" style="--figure-width:750px"><img src="assets/img/main-window-v2_1.png" alt="메인 화면 전체입니다. v2.1 기준 reference 캡쳐로, 각 기능 섹션의 위치를 확인할 때 사용합니다." loading="lazy"><figcaption>메인 화면 전체입니다. v2.1 기준 reference 캡쳐로, 각 기능 섹션의 위치를 확인할 때 사용합니다.</figcaption></figure>
         </section><section id="pattern-settings" class="manual-section">
           <div class="section-kicker">06</div>
           <div class="section-title-row"><h2>Pattern Settings</h2></div>
@@ -258,7 +258,7 @@ dist\maskless_v2_1.exe</code></pre>
         </section><section id="gds-import" class="manual-section">
           <div class="section-kicker">12</div>
           <div class="section-title-row"><h2>GDS Import</h2></div>
-          <p class="section-intro">v2.0.10.4 이후 GDS Import는 단순 layer 선택이 아니라 interactive crop frame을 조정하는 설정창으로 바뀌었습니다.</p>
+          <p class="section-intro">v2.1 GDS Import는 단순 layer 선택뿐 아니라 interactive crop frame을 조정하는 설정창을 제공합니다.</p>
           <div class="tabs"><div class="tab-list" role="tablist"><button class="tab-button active" type="button" role="tab" aria-selected="true" data-tab-target="gds-import-tab-0">화면 읽는 법</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="gds-import-tab-1">작업 순서</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="gds-import-tab-2">메시지</button></div><div class="tab-panel active" id="gds-import-tab-0" role="tabpanel"><ul>
   <li><code>Cell</code>, <code>polygons</code>: 선택된 GDS cell과 polygon 수입니다.</li>
   <li><code>GDS bounds</code>, <code>GDS size</code>, <code>center</code>: 실제 layout 치수입니다.</li>
@@ -416,7 +416,7 @@ dist\maskless_v2_1.exe</code></pre>
           <p class="section-intro">이 메뉴얼에 반영한 최신 변경사항입니다.</p>
           <ul>
   <li>릴리즈 빌드: <code>maskless_v2_1.exe</code></li>
-  <li>v2.0.10 계열 핫픽스를 v2.1 안정 릴리즈로 통합</li>
+  <li>GDS Import, UV Keystone, Motorized Focus, manual LED 안정화 개선 반영</li>
   <li><code>LED ON</code>은 UV Keystone이 활성화되어 있으면 보정 이미지를 적용하고, 비활성 상태이면 raw 이미지로 출력</li>
   <li>수동 <code>LED ON</code> 직후 <code>Manual LED starting...</code>, 실제 LED ON 성공 후 <code>Manual exposing... 0.000s</code> 상태 표시</li>
   <li>UV Keystone 보정 이미지 생성 실패 시 LED ON 없이 경고 후 중단</li>
