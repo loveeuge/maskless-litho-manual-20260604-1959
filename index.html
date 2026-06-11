@@ -42,8 +42,8 @@ h2 { font-size:clamp(1.6rem,3vw,2.45rem); }
 .hero-actions .secondary-action { background:transparent; color:#d6fff9; border:1px solid rgba(52,198,176,.6); }
 .callout { margin:1rem 0; padding:.85rem 1rem; border-left:4px solid var(--accent); border-radius:7px; background:rgba(52,198,176,.08); color:#dfe9ef; }
 .callout.warn { border-left-color:var(--warn); background:rgba(245,186,105,.1); }
-.manual-figure { margin:1rem 0; padding:.7rem; border:1px solid var(--line); border-radius:10px; background:var(--panel); }
-.manual-figure img { display:block; width:100%; height:auto; border-radius:6px; background:#05080c; }
+.manual-figure { width:100%; max-width:min(100%,var(--figure-width,720px)); margin:1rem 0; padding:.7rem; border:1px solid var(--line); border-radius:10px; background:var(--panel); }
+.manual-figure img { display:block; width:100%; height:auto; max-height:680px; object-fit:contain; border-radius:6px; background:#05080c; }
 .manual-figure figcaption { margin-top:.55rem; color:var(--muted); font-size:.9rem; }
 .tabs { margin-top:1rem; overflow:hidden; border:1px solid var(--line); border-radius:10px; background:rgba(23,30,37,.76); }
 .tab-list { display:flex; overflow-x:auto; border-bottom:1px solid var(--line); background:#0d141b; }
@@ -85,7 +85,7 @@ tr:last-child td { border-bottom:0; }
     <div class="hero-actions"><a href="#quick-start">빠른 시작</a><a class="secondary-action" href="#release-notes">변경사항</a></div>
     <div class="callout"><strong>기준:</strong> 현재 worktree의 <code>README.md</code>, <code>ui/main_window.py</code>, <code>ui/setting_window.py</code>, <code>ui/gds_layer_dialog.py</code>와 실제 v2.0.10.5 UI 캡쳐를 기준으로 작성했습니다.</div>
   </div>
-  <figure class="manual-figure"><img src="assets/img/main-window-v2_0_10_5.png" alt="v2.0.10.5 메인 화면입니다. Pattern Settings에 LED ON과 Keystone Preview / Expose가 분리되어 있습니다." loading="lazy"><figcaption>v2.0.10.5 메인 화면입니다. Pattern Settings에 LED ON과 Keystone Preview / Expose가 분리되어 있습니다.</figcaption></figure>
+  <figure class="manual-figure" style="--figure-width:750px"><img src="assets/img/main-window-v2_0_10_5.png" alt="v2.0.10.5 메인 화면입니다. Pattern Settings에 LED ON과 Keystone Preview / Expose가 분리되어 있습니다." loading="lazy"><figcaption>v2.0.10.5 메인 화면입니다. Pattern Settings에 LED ON과 Keystone Preview / Expose가 분리되어 있습니다.</figcaption></figure>
 </div>
         </section><section id="quick-start" class="manual-section">
           <div class="section-kicker">02</div>
@@ -150,7 +150,7 @@ dist\maskless_v2_0_10_5.exe</code></pre>
     <tr><td><code>Expose Setup</code></td><td>노광 sequence row 추가/편집/실행</td><td>Calibration ON/OFF에 따라 intensity 단위가 달라짐</td></tr>
   </tbody>
 </table></div>
-<figure class="manual-figure"><img src="assets/img/main-window-v2_0_10_5.png" alt="메인 화면 전체입니다. 최신 reference 캡쳐로, 이전 v2.0.9 화면 대신 이 이미지를 사용합니다." loading="lazy"><figcaption>메인 화면 전체입니다. 최신 reference 캡쳐로, 이전 v2.0.9 화면 대신 이 이미지를 사용합니다.</figcaption></figure>
+<figure class="manual-figure" style="--figure-width:750px"><img src="assets/img/main-window-v2_0_10_5.png" alt="메인 화면 전체입니다. 최신 reference 캡쳐로, 이전 v2.0.9 화면 대신 이 이미지를 사용합니다." loading="lazy"><figcaption>메인 화면 전체입니다. 최신 reference 캡쳐로, 이전 v2.0.9 화면 대신 이 이미지를 사용합니다.</figcaption></figure>
         </section><section id="pattern-settings" class="manual-section">
           <div class="section-kicker">06</div>
           <div class="section-title-row"><h2>Pattern Settings</h2></div>
@@ -163,7 +163,7 @@ dist\maskless_v2_0_10_5.exe</code></pre>
   <li><code>LED ON</code>: raw 수동 출력입니다. UV Keystone 보정을 적용하지 않습니다.</li>
   <li><code>Keystone Preview / Expose</code>: 활성 UV Keystone profile을 적용한 보정 출력 확인입니다.</li>
 </ul>
-<figure class="manual-figure"><img src="assets/img/pattern-settings-v2_0_10_5.png" alt="Pattern Settings 최신 캡쳐입니다. LED ON 아래에 Keystone Preview / Expose 버튼이 추가되어 있습니다." loading="lazy"><figcaption>Pattern Settings 최신 캡쳐입니다. LED ON 아래에 Keystone Preview / Expose 버튼이 추가되어 있습니다.</figcaption></figure></div><div class="tab-panel" id="pattern-settings-tab-1" role="tabpanel"><ol>
+<figure class="manual-figure" style="--figure-width:420px"><img src="assets/img/pattern-settings-v2_0_10_5.png" alt="Pattern Settings 최신 캡쳐입니다. LED ON 아래에 Keystone Preview / Expose 버튼이 추가되어 있습니다." loading="lazy"><figcaption>Pattern Settings 최신 캡쳐입니다. LED ON 아래에 Keystone Preview / Expose 버튼이 추가되어 있습니다.</figcaption></figure></div><div class="tab-panel" id="pattern-settings-tab-1" role="tabpanel"><ol>
   <li>일반 이미지면 <code>Load image</code>, layout이면 <code>Load GDS</code>를 선택합니다.</li>
   <li>파일명이 <code>N/A</code>에서 실제 파일명으로 바뀌었는지 확인합니다.</li>
   <li>회전이 필요하면 <code>Image Rotation (deg)</code> 값을 조정합니다.</li>
@@ -203,7 +203,7 @@ dist\maskless_v2_0_10_5.exe</code></pre>
   <li><code>Draw CAD</code>: 현재 Align View와 같은 이미지 평면을 기준으로 CAD View를 엽니다.</li>
   <li>창 이동/크기 조절로 현미경 화면 위 패턴 위치를 맞춥니다.</li>
 </ul>
-<figure class="manual-figure"><img src="assets/img/align-viewer-v2_0_10_5.png" alt="Align Viewer 영역 캡쳐입니다. Show와 Draw CAD 진입점을 설명할 때 사용합니다." loading="lazy"><figcaption>Align Viewer 영역 캡쳐입니다. Show와 Draw CAD 진입점을 설명할 때 사용합니다.</figcaption></figure></div><div class="tab-panel" id="align-viewer-tab-1" role="tabpanel"><ul>
+<figure class="manual-figure" style="--figure-width:420px"><img src="assets/img/align-viewer-v2_0_10_5.png" alt="Align Viewer 영역 캡쳐입니다. Show와 Draw CAD 진입점을 설명할 때 사용합니다." loading="lazy"><figcaption>Align Viewer 영역 캡쳐입니다. Show와 Draw CAD 진입점을 설명할 때 사용합니다.</figcaption></figure></div><div class="tab-panel" id="align-viewer-tab-1" role="tabpanel"><ul>
   <li>Align View는 화면 표시 정렬입니다. 실제 DLP 출력 왜곡 보정은 UV Keystone이 담당합니다.</li>
   <li>Draw CAD를 열기 전에는 이미지 로드, DLP display 설정, Align View 표시가 필요합니다.</li>
   <li>Draw CAD 작업 전에는 Align View가 DLP display 위에 떠 있지 않도록 위치를 확인합니다.</li>
@@ -219,8 +219,8 @@ dist\maskless_v2_0_10_5.exe</code></pre>
   <li><code>Export</code>: 현재 활성 profile을 파일로 내보냅니다.</li>
   <li><code>Advanced</code>: 1/2/4 Point Align 수동 정렬 controls를 펼칩니다.</li>
 </ul>
-<figure class="manual-figure"><img src="assets/img/align-wizard-v2_0_10_5.png" alt="Align Wizard 기본 화면입니다. 이전 메뉴얼의 1/2/4 Point 화면과 다르므로 새 캡쳐로 교체해야 합니다." loading="lazy"><figcaption>Align Wizard 기본 화면입니다. 이전 메뉴얼의 1/2/4 Point 화면과 다르므로 새 캡쳐로 교체해야 합니다.</figcaption></figure></div><div class="tab-panel" id="align-wizard-tab-1" role="tabpanel"><p>Advanced를 펼치면 기존 semi-auto align 기능을 사용할 수 있습니다. 현미경/카메라 화면과 Align View에서 같은 기준점을 순서대로 찍고, <code>Preview Calculate</code> 후 <code>Apply</code>합니다.</p>
-<figure class="manual-figure"><img src="assets/img/align-wizard-advanced-v2_0_10_5.png" alt="Advanced 화면입니다. 1 Point, 2 Point, 4 Point Keystone Align 수동 정렬이 이곳에 있습니다." loading="lazy"><figcaption>Advanced 화면입니다. 1 Point, 2 Point, 4 Point Keystone Align 수동 정렬이 이곳에 있습니다.</figcaption></figure></div></div>
+<figure class="manual-figure" style="--figure-width:420px"><img src="assets/img/align-wizard-v2_0_10_5.png" alt="Align Wizard 기본 화면입니다. 이전 메뉴얼의 1/2/4 Point 화면과 다르므로 새 캡쳐로 교체해야 합니다." loading="lazy"><figcaption>Align Wizard 기본 화면입니다. 이전 메뉴얼의 1/2/4 Point 화면과 다르므로 새 캡쳐로 교체해야 합니다.</figcaption></figure></div><div class="tab-panel" id="align-wizard-tab-1" role="tabpanel"><p>Advanced를 펼치면 기존 semi-auto align 기능을 사용할 수 있습니다. 현미경/카메라 화면과 Align View에서 같은 기준점을 순서대로 찍고, <code>Preview Calculate</code> 후 <code>Apply</code>합니다.</p>
+<figure class="manual-figure" style="--figure-width:760px"><img src="assets/img/align-wizard-advanced-v2_0_10_5.png" alt="Advanced 화면입니다. 1 Point, 2 Point, 4 Point Keystone Align 수동 정렬이 이곳에 있습니다." loading="lazy"><figcaption>Advanced 화면입니다. 1 Point, 2 Point, 4 Point Keystone Align 수동 정렬이 이곳에 있습니다.</figcaption></figure></div></div>
         </section><section id="uv-keystone" class="manual-section">
           <div class="section-kicker">11</div>
           <div class="section-title-row"><h2>UV Keystone Calibration</h2></div>
@@ -232,14 +232,14 @@ dist\maskless_v2_0_10_5.exe</code></pre>
   <li>각 visible UV point는 4회 클릭합니다.</li>
   <li>완료 후 <code>.maskkeystone</code> profile이 저장되고 ON 상태로 활성화됩니다.</li>
 </ul>
-<figure class="manual-figure"><img src="assets/img/uv-keystone-calibration-v2_0_10_5.png" alt="UV Keystone Calibration 시작 화면입니다. Step 1/2, Step 2/2 안내가 포함되어 있습니다." loading="lazy"><figcaption>UV Keystone Calibration 시작 화면입니다. Step 1/2, Step 2/2 안내가 포함되어 있습니다.</figcaption></figure></div><div class="tab-panel" id="uv-keystone-tab-1" role="tabpanel"><ol>
+<figure class="manual-figure" style="--figure-width:420px"><img src="assets/img/uv-keystone-calibration-v2_0_10_5.png" alt="UV Keystone Calibration 시작 화면입니다. Step 1/2, Step 2/2 안내가 포함되어 있습니다." loading="lazy"><figcaption>UV Keystone Calibration 시작 화면입니다. Step 1/2, Step 2/2 안내가 포함되어 있습니다.</figcaption></figure></div><div class="tab-panel" id="uv-keystone-tab-1" role="tabpanel"><ol>
   <li><code>Setting &gt; Display</code>에서 1920x1080 DLP monitor를 선택합니다.</li>
   <li><code>Align Wizard &gt; UV Keystone Calibration</code>을 엽니다.</li>
   <li><code>Start Calibration</code>을 누릅니다.</li>
   <li>DLP에 표시되는 기준점을 카메라 화면에서 찾아 4회 클릭합니다.</li>
   <li>17점이 끝나면 corrected verification pattern이 DLP에 표시됩니다. 안전을 위해 LED output은 OFF 상태로 유지됩니다.</li>
 </ol>
-<figure class="manual-figure"><img src="assets/img/uv-keystone-progress-v2_0_10_5.png" alt="UV Keystone 진행 상태 예시입니다. 현재 step, point 번호, click 횟수를 안내합니다." loading="lazy"><figcaption>UV Keystone 진행 상태 예시입니다. 현재 step, point 번호, click 횟수를 안내합니다.</figcaption></figure></div><div class="tab-panel" id="uv-keystone-tab-2" role="tabpanel"><ul>
+<figure class="manual-figure" style="--figure-width:420px"><img src="assets/img/uv-keystone-progress-v2_0_10_5.png" alt="UV Keystone 진행 상태 예시입니다. 현재 step, point 번호, click 횟수를 안내합니다." loading="lazy"><figcaption>UV Keystone 진행 상태 예시입니다. 현재 step, point 번호, click 횟수를 안내합니다.</figcaption></figure></div><div class="tab-panel" id="uv-keystone-tab-2" role="tabpanel"><ul>
   <li><code>UV Keystone: NOT APPLIED | no profile</code>: profile이 없습니다.</li>
   <li><code>UV Keystone: APPLIED (ON) | 1920x1080 | file.maskkeystone</code>: profile이 있고 출력 보정이 켜져 있습니다.</li>
   <li><code>UV Keystone: NOT APPLIED (OFF) | ...</code>: profile은 있지만 보정 적용이 꺼져 있습니다.</li>
@@ -258,7 +258,7 @@ dist\maskless_v2_0_10_5.exe</code></pre>
   <li>노란색 박스: DLP로 crop될 frame입니다.</li>
   <li><code>Frame check</code>: 현재 frame 안에 geometry가 들어오는지와 예상 visible span을 알려줍니다.</li>
 </ul>
-<figure class="manual-figure"><img src="assets/img/gds-import-settings-v2_0_10_5.png" alt="GDS Import Settings 최신 화면입니다. 이전의 단순 Select GDS Layer 캡쳐를 이 이미지로 교체해야 합니다." loading="lazy"><figcaption>GDS Import Settings 최신 화면입니다. 이전의 단순 Select GDS Layer 캡쳐를 이 이미지로 교체해야 합니다.</figcaption></figure></div><div class="tab-panel" id="gds-import-tab-1" role="tabpanel"><ol>
+<figure class="manual-figure" style="--figure-width:620px"><img src="assets/img/gds-import-settings-v2_0_10_5.png" alt="GDS Import Settings 최신 화면입니다. 이전의 단순 Select GDS Layer 캡쳐를 이 이미지로 교체해야 합니다." loading="lazy"><figcaption>GDS Import Settings 최신 화면입니다. 이전의 단순 Select GDS Layer 캡쳐를 이 이미지로 교체해야 합니다.</figcaption></figure></div><div class="tab-panel" id="gds-import-tab-1" role="tabpanel"><ol>
   <li>현재 렌즈의 CAD scale profile을 저장합니다.</li>
   <li><code>Setting &gt; Display</code>에서 DLP display를 적용합니다.</li>
   <li><code>Load GDS</code>를 누르고 .gds/.gds2 파일을 선택합니다.</li>
@@ -284,8 +284,8 @@ dist\maskless_v2_0_10_5.exe</code></pre>
   <li><code>Grid Snap</code>: 점을 지정한 um grid에 맞춥니다.</li>
   <li><code>W um</code>, <code>H um</code>, <code>Stroke um</code>: 실제 치수와 선폭을 지정합니다.</li>
 </ul>
-<figure class="manual-figure"><img src="assets/img/draw-cad-view-v2_0_10_5.png" alt="CAD View 최신 캡쳐입니다. Align View와 같은 이미지 평면에서 도형을 작성합니다." loading="lazy"><figcaption>CAD View 최신 캡쳐입니다. Align View와 같은 이미지 평면에서 도형을 작성합니다.</figcaption></figure>
-<figure class="manual-figure"><img src="assets/img/draw-cad-tools-v2_0_10_5.png" alt="Draw CAD Tools 상단입니다. 도형 도구, grid, scale 입력을 설명합니다." loading="lazy"><figcaption>Draw CAD Tools 상단입니다. 도형 도구, grid, scale 입력을 설명합니다.</figcaption></figure></div><div class="tab-panel" id="draw-cad-tab-1" role="tabpanel"><ul>
+<figure class="manual-figure" style="--figure-width:672px"><img src="assets/img/draw-cad-view-v2_0_10_5.png" alt="CAD View 최신 캡쳐입니다. Align View와 같은 이미지 평면에서 도형을 작성합니다." loading="lazy"><figcaption>CAD View 최신 캡쳐입니다. Align View와 같은 이미지 평면에서 도형을 작성합니다.</figcaption></figure>
+<figure class="manual-figure" style="--figure-width:351px"><img src="assets/img/draw-cad-tools-v2_0_10_5.png" alt="Draw CAD Tools 상단입니다. 도형 도구, grid, scale 입력을 설명합니다." loading="lazy"><figcaption>Draw CAD Tools 상단입니다. 도형 도구, grid, scale 입력을 설명합니다.</figcaption></figure></div><div class="tab-panel" id="draw-cad-tab-1" role="tabpanel"><ul>
   <li>이미지가 먼저 로드되어 있어야 합니다.</li>
   <li>DLP display가 설정되어 있어야 합니다.</li>
   <li>Align View를 <code>Show</code>로 연 상태여야 합니다.</li>
@@ -304,7 +304,7 @@ dist\maskless_v2_0_10_5.exe</code></pre>
   <li><code>Expose Now</code>: 확인 후 CAD 결과를 1회 노광합니다.</li>
   <li><code>Include Base Image</code>: 기존 이미지 위에 CAD 도형을 합쳐 output을 만듭니다.</li>
 </ul>
-<figure class="manual-figure"><img src="assets/img/draw-cad-output-controls-v2_0_10_5.png" alt="Draw CAD 하단 Output controls입니다. Include Base Image와 Save/Load/Export/Apply/Expose Now를 설명할 때 사용합니다." loading="lazy"><figcaption>Draw CAD 하단 Output controls입니다. Include Base Image와 Save/Load/Export/Apply/Expose Now를 설명할 때 사용합니다.</figcaption></figure>
+<figure class="manual-figure" style="--figure-width:351px"><img src="assets/img/draw-cad-output-controls-v2_0_10_5.png" alt="Draw CAD 하단 Output controls입니다. Include Base Image와 Save/Load/Export/Apply/Expose Now를 설명할 때 사용합니다." loading="lazy"><figcaption>Draw CAD 하단 Output controls입니다. Include Base Image와 Save/Load/Export/Apply/Expose Now를 설명할 때 사용합니다.</figcaption></figure>
         </section><section id="expose-setup" class="manual-section">
           <div class="section-kicker">15</div>
           <div class="section-title-row"><h2>Expose Setup</h2></div>
@@ -317,7 +317,7 @@ dist\maskless_v2_0_10_5.exe</code></pre>
   <li><code>Start</code>, <code>Next</code>, <code>Stop</code>: sequence 실행/진행/중단입니다.</li>
   <li>컬럼: File, Exposure (ms), Rotation (deg), Intensity, Rest (ms), Repeat</li>
 </ul>
-<figure class="manual-figure"><img src="assets/img/expose-setup-v2_0_10_5.png" alt="Expose Setup 최신 캡쳐입니다. Two-line table header와 Add/Delete/Up/Down/Export 버튼을 보여줍니다." loading="lazy"><figcaption>Expose Setup 최신 캡쳐입니다. Two-line table header와 Add/Delete/Up/Down/Export 버튼을 보여줍니다.</figcaption></figure></div><div class="tab-panel" id="expose-setup-tab-1" role="tabpanel"><ul>
+<figure class="manual-figure" style="--figure-width:760px"><img src="assets/img/expose-setup-v2_0_10_5.png" alt="Expose Setup 최신 캡쳐입니다. Two-line table header와 Add/Delete/Up/Down/Export 버튼을 보여줍니다." loading="lazy"><figcaption>Expose Setup 최신 캡쳐입니다. Two-line table header와 Add/Delete/Up/Down/Export 버튼을 보여줍니다.</figcaption></figure></div><div class="tab-panel" id="expose-setup-tab-1" role="tabpanel"><ul>
   <li>Start 전에는 모든 row의 Exposure, Intensity, Repeat, Rest를 다시 확인합니다.</li>
   <li>UV Keystone 보정 실패는 black fallback으로 숨기지 않고 LED ON 전 안전 중단됩니다.</li>
   <li>setup이 lock된 상태에서는 임의 편집을 피하고, 필요한 경우 Stop 후 수정합니다.</li>
@@ -333,7 +333,7 @@ dist\maskless_v2_0_10_5.exe</code></pre>
   <li>Pattern Settings에 lens dropdown이 나타나면 사용할 lens를 선택합니다.</li>
   <li>Expose Setup의 intensity 단위가 현재 Calibration 상태와 일치하는지 확인합니다.</li>
 </ol>
-<figure class="manual-figure"><img src="assets/img/setting-expose-v2_0_10_5.png" alt="Setting > Expose 탭입니다. Calibration, Compensation, TEST Mode가 있습니다." loading="lazy"><figcaption>Setting > Expose 탭입니다. Calibration, Compensation, TEST Mode가 있습니다.</figcaption></figure>
+<figure class="manual-figure" style="--figure-width:500px"><img src="assets/img/setting-expose-v2_0_10_5.png" alt="Setting > Expose 탭입니다. Calibration, Compensation, TEST Mode가 있습니다." loading="lazy"><figcaption>Setting > Expose 탭입니다. Calibration, Compensation, TEST Mode가 있습니다.</figcaption></figure>
         </section><section id="compensation" class="manual-section">
           <div class="section-kicker">17</div>
           <div class="section-title-row"><h2>Compensation</h2></div>
@@ -348,7 +348,7 @@ dist\maskless_v2_0_10_5.exe</code></pre>
   <div class="section-kicker">18</div>
   <div class="section-title-row"><h2>Settings</h2></div>
   <p class="section-intro">장비 제어, display 선택, Align View/UV Keystone, 노광 보정, TEST Mode를 탭별로 관리합니다.</p>
-  <div class="tabs"><div class="tab-list" role="tablist"><button class="tab-button active" type="button" role="tab" aria-selected="true" data-tab-target="settings-tab-0">General</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="settings-tab-1">Display</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="settings-tab-2">Align View</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="settings-tab-3">Expose</button></div><div class="tab-panel active" id="settings-tab-0" role="tabpanel"><figure class="manual-figure"><img src="assets/img/setting-general-v2_0_10_5.png" alt="General 탭입니다. DLP Controller, Legacy PDC05, Power, Fan, App Mode를 확인합니다." loading="lazy"><figcaption>General 탭입니다. DLP Controller, Legacy PDC05, Power, Fan, App Mode를 확인합니다.</figcaption></figure></div><div class="tab-panel" id="settings-tab-1" role="tabpanel"><figure class="manual-figure"><img src="assets/img/setting-display-v2_0_10_5.png" alt="Display 탭입니다. Connected Monitor List에서 DLP monitor를 선택하고 Apply를 누릅니다." loading="lazy"><figcaption>Display 탭입니다. Connected Monitor List에서 DLP monitor를 선택하고 Apply를 누릅니다.</figcaption></figure></div><div class="tab-panel" id="settings-tab-2" role="tabpanel"><figure class="manual-figure"><img src="assets/img/setting-align-view-v2_0_10_5.png" alt="Align View 탭입니다. UV Keystone 상태와 Enable/Disable 버튼이 v2.0.10.5 기준으로 표시됩니다." loading="lazy"><figcaption>Align View 탭입니다. UV Keystone 상태와 Enable/Disable 버튼이 v2.0.10.5 기준으로 표시됩니다.</figcaption></figure></div><div class="tab-panel" id="settings-tab-3" role="tabpanel"><figure class="manual-figure"><img src="assets/img/setting-expose-v2_0_10_5.png" alt="Expose 탭입니다. Anti-vibration, Calibration, Compensation, TEST Mode를 관리합니다." loading="lazy"><figcaption>Expose 탭입니다. Anti-vibration, Calibration, Compensation, TEST Mode를 관리합니다.</figcaption></figure></div></div>
+  <div class="tabs"><div class="tab-list" role="tablist"><button class="tab-button active" type="button" role="tab" aria-selected="true" data-tab-target="settings-tab-0">General</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="settings-tab-1">Display</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="settings-tab-2">Align View</button><button class="tab-button" type="button" role="tab" aria-selected="false" data-tab-target="settings-tab-3">Expose</button></div><div class="tab-panel active" id="settings-tab-0" role="tabpanel"><figure class="manual-figure" style="--figure-width:500px"><img src="assets/img/setting-general-v2_0_10_5.png" alt="General 탭입니다. DLP Controller, Legacy PDC05, Power, Fan, App Mode를 확인합니다." loading="lazy"><figcaption>General 탭입니다. DLP Controller, Legacy PDC05, Power, Fan, App Mode를 확인합니다.</figcaption></figure></div><div class="tab-panel" id="settings-tab-1" role="tabpanel"><figure class="manual-figure" style="--figure-width:500px"><img src="assets/img/setting-display-v2_0_10_5.png" alt="Display 탭입니다. Connected Monitor List에서 DLP monitor를 선택하고 Apply를 누릅니다." loading="lazy"><figcaption>Display 탭입니다. Connected Monitor List에서 DLP monitor를 선택하고 Apply를 누릅니다.</figcaption></figure></div><div class="tab-panel" id="settings-tab-2" role="tabpanel"><figure class="manual-figure" style="--figure-width:500px"><img src="assets/img/setting-align-view-v2_0_10_5.png" alt="Align View 탭입니다. UV Keystone 상태와 Enable/Disable 버튼이 v2.0.10.5 기준으로 표시됩니다." loading="lazy"><figcaption>Align View 탭입니다. UV Keystone 상태와 Enable/Disable 버튼이 v2.0.10.5 기준으로 표시됩니다.</figcaption></figure></div><div class="tab-panel" id="settings-tab-3" role="tabpanel"><figure class="manual-figure" style="--figure-width:500px"><img src="assets/img/setting-expose-v2_0_10_5.png" alt="Expose 탭입니다. Anti-vibration, Calibration, Compensation, TEST Mode를 관리합니다." loading="lazy"><figcaption>Expose 탭입니다. Anti-vibration, Calibration, Compensation, TEST Mode를 관리합니다.</figcaption></figure></div></div>
 </section><section id="legacy-dlp" class="manual-section">
           <div class="section-kicker">19</div>
           <div class="section-title-row"><h2>Legacy DLP</h2></div>
