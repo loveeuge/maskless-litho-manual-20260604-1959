@@ -1,22 +1,29 @@
-# MASKLESS LITHO v2.1 Image Reference
+# v2.1.5 캡쳐 배치
 
-| Image | Manual section | 설명 포인트 |
+아래 파일은 모두 `assets/img/`에 있습니다. 본문 이미지는 원본 크기 이상으로
+늘리지 않으며 클릭하면 원본 PNG가 열립니다.
+
+| 파일 | 섹션 | 설명 |
 |---|---|---|
-| `main-window-v2_1.png` | Home, Main Window | v2.1 전체 UI, Setting/Initialize/Motorized Focus/Pattern Settings/Align Viewer/Expose Setup 배치 |
-| `pattern-settings-v2_1.png` | Pattern Settings, Manual LED ON | `Load image`, `Load GDS`, `Image Rotation`, `Intensity`, `LED ON` |
-| `align-viewer-v2_1.png` | Align Viewer | `Opacity`, `Show`, `Draw CAD` |
-| `expose-setup-v2_1.png` | Expose Setup | Two-line sequence table, Add/Delete/Up/Down/Export |
-| `setting-general-v2_1.png` | Settings > General | DLP Controller, Legacy PDC05, Power/Fan, App Mode |
-| `setting-display-v2_1.png` | Settings > Display | DLP monitor 선택과 `Apply` |
-| `setting-align-view-v2_1.png` | Settings > Align View | UV Keystone status, `Enable UV Keystone`, `Disable UV Keystone` |
-| `setting-expose-v2_1.png` | Settings > Expose, Calibration LUT | Anti-vibration, Calibration, Compensation, TEST Mode |
-| `align-wizard-v2_1.png` | Align Wizard | UV Keystone Calibration, Import, Export, Advanced |
-| `align-wizard-advanced-v2_1.png` | Align Wizard > Advanced | 1/2/4 Point Align 수동 정렬 |
-| `uv-keystone-calibration-v2_1.png` | UV Keystone Calibration | Step 1/2, Step 2/2 full-field calibration 안내 |
-| `uv-keystone-progress-v2_1.png` | UV Keystone Calibration | 진행 상태, point 번호, click 횟수 |
-| `gds-import-settings-v2_1.png` | GDS Import | Interactive crop frame, crop center, Zoom/Fit, Frame check |
-| `draw-cad-view-v2_1.png` | Draw CAD | CAD View 작업 화면 |
-| `draw-cad-tools-v2_1.png` | Draw CAD | 도형 도구, grid, size/scale 입력 |
-| `draw-cad-output-controls-v2_1.png` | CAD Output | Include Base Image, Save/Load/Export/Apply/Expose Now |
+| main-window-v2_1_5.png | Home, Main Window | 일반 버전 전체 UI. Focus 버튼 없음 |
+| pattern-settings-v2_1_5.png | Pattern Settings | Load image/GDS, 회전, Intensity, LED ON |
+| manual-led-preparing-v2_1_5.png | Manual LED ON | 준비 중 실제 대화상자 예시 |
+| manual-led-confirm-v2_1_5.png | Manual LED ON | Pattern visible / LED OFF / Cancel |
+| align-viewer-v2_1_5.png | Align Viewer | Opacity, Show, Draw CAD |
+| expose-setup-v2_1_5.png | Expose Setup | 표와 두 줄 헤더 전체 |
+| setting-general-v2_1_5.png | Settings / General | 상태, Legacy, Power/FAN, 테마 |
+| setting-display-v2_1_5.png | DLP Display / Apply, Settings | 화면 선택 후 Apply 검증 |
+| setting-align-view-v2_1_5.png | Settings / Align View | Overlay 및 Keystone |
+| setting-expose-v2_1_5.png | Calibration LUT, Settings | 보정/Anti-vibration/TEST |
+| setting-help-v2_1_5.png | Settings / Help | Help 버튼 |
+| align-wizard-v2_1_5.png | Align Wizard | Calibration/Import/Export |
+| align-wizard-advanced-v2_1_5.png | Align Wizard / Advanced | 1/2/4 Point |
+| uv-keystone-calibration-v2_1_5.png | UV Keystone | 시작 화면 |
+| uv-keystone-progress-v2_1_5.png | UV Keystone | 진행 문구 예시 |
+| gds-import-settings-v2_1_5.png | GDS Import | 실제 예제 GDS 파싱, 흰 도형/노란 frame |
+| draw-cad-view-v2_1_5.png | Draw CAD | 작업 평면 |
+| draw-cad-tools-v2_1_5.png | Draw CAD | 도형, 치수, scale |
+| draw-cad-output-controls-v2_1_5.png | CAD Output | 저장/PNG/Apply/Expose |
 
-주의: v2.1에는 별도 `Keystone Preview / Expose` 캡쳐가 없습니다. 보정 적용 여부는 `Setting > Align View`의 UV Keystone 상태와 `LED ON` 동작 설명으로 안내합니다.
+LED/UV 상태는 하드웨어 실행 없이 재현했습니다. 모니터 이름, 예제 파일,
+수치와 TEST Mode 표시는 설명용이며 장비 출력/측정의 성공 증거가 아닙니다.
