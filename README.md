@@ -14,6 +14,11 @@ LED OFF/current/FAN 오류 및 CAD 저장 취소 처리를 반영했습니다.
 
 ## 파일 / 재생성
 
+- [한글 매뉴얼 PDF 다운로드](downloads/MASKLESS_LITHO_v2_1_5_Manual_ko.pdf): v2.1.5 일반 버전, 32쪽, 2026-10-28 업데이트.
+- 첫 화면의 **한글 매뉴얼 PDF 다운로드** 버튼으로 로그인 없이 내려받을 수 있습니다.
+- PDF에는 24개 항목과 숨겨진 탭 27개, 화면 캡쳐 22개 배치를 모두 포함했습니다. 검색, 목차 이동, 책갈피를 지원합니다.
+- PDF 생성 및 검사 도구는 [다운로드 사이트 저장소](https://github.com/loveeuge/maskless-download-site/tree/main/tools)에 있습니다. `build_manual_pdf.py`에 한글/영문 사이트 폴더를 전달하고, 생성 결과를 시각 검토한 뒤 이 저장소의 `downloads/`에 복사합니다. 웹 문서를 다시 생성할 때 PDF 링크도 유지하세요.
+
 - `index.html`: 배포 가능한 원페이지 사이트
 - `assets/img/*-v2_1_5.png`: 현재 소스의 실제 위젯 캡쳐 19개
 - `IMAGE_REFERENCE.md`: 캡쳐 배치와 설명
